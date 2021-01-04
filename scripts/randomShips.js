@@ -1,7 +1,34 @@
-const board = []
+let board = []
 const size = 10;
 const boardSize = size + 2;
 let shipsToFind=[];
+//printBoard();
+
+///////////////////////////////////////////////////////////
+
+// board:
+
+// 0 (default) - nothing
+// 1 - miss
+// 2 - hit ship
+// 3 - sunk ship
+// 4 - near ship
+// 5 - ship
+
+const defaultSquare = 0;
+const missedSquare = 1;
+const hitSquare = 2;
+const sunkSquare = 3;
+const nearShipSquare = 4;
+const shipSquare = 5;
+
+
+let currentSumShip = [0,0,0,0,0,0,0,0,0,0];
+// let winningSumShip = [1,1,1,1,2,2,2,3,3,4];
+let winningSumShip = [4,3,3,2,2,2,1,1,1,1];
+
+let texts = [];
+let squares = [];
 
 function createEmptyBoardAndBorders() {
     for (let row = 0; row < boardSize; row++) {
@@ -220,36 +247,6 @@ function createRandomShips() {
 
 
 
-createEmptyBoardAndBorders();
-createRandomShips();
-//printBoard();
-
-///////////////////////////////////////////////////////////
-
-// board:
-
-// 0 (default) - nothing
-// 1 - miss
-// 2 - hit ship
-// 3 - sunk ship
-// 4 - near ship
-// 5 - ship
-
-const defaultSquare = 0;
-const missedSquare = 1;
-const hitSquare = 2;
-const sunkSquare = 3;
-const nearShipSquare = 4;
-const shipSquare = 5;
-
-
-let currentSumShip = [0,0,0,0,0,0,0,0,0,0];
-// let winningSumShip = [1,1,1,1,2,2,2,3,3,4];
-let winningSumShip = [4,3,3,2,2,2,1,1,1,1];
-
-let texts = [];
-let squares = [];
-
 const createShips = function() {
 
     //ships 
@@ -328,8 +325,14 @@ const dontShowShips = function(td) {
 const drawTable = function() {
 
     let body = document.getElementsByTagName('body')[0];
-
     let table = document.getElementsByTagName('table')[0];
+    console.log("table",table);
+    if(table){
+        table.remove();
+    console.log("table",table);
+
+     }
+     table = document.createElement('table');
 
     //table.setAttribute('border', '1');
     
@@ -377,6 +380,8 @@ const drawTable = function() {
     table.appendChild(tbdy);
 
     body.appendChild(table)
+    console.log("table",table);
+
 }
 
 ///
@@ -602,12 +607,29 @@ const playGuess = function() {
     }
 }
 
-// createRandomShips();
-// createNear();
- drawTable();
+function randomAgain(){
+    board=[]
+    console.log("random");
+    createEmptyBoardAndBorders();
+    createRandomShips();
+    createNear();
+    document.getElementById("myTable").deleteRow(0);
+
+    drawTable();
+    getSquares();
+    getText();
+    playGuess();
+
+}
+
+createEmptyBoardAndBorders();
+createRandomShips();
+
+createNear();
+drawTable();
 getSquares();
 getText();
- playGuess();
+playGuess();
 
  console.log(shipsToFind[0][0][0]);
  const ship4 = [[[[9,3],[9,4],[9,5],[9,6]],[0,0,0,0]]];
