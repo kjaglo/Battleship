@@ -162,7 +162,7 @@ const dontShowShips = function(td) {
 ///
 const drawTable = function() {
 
-    let body = document.getElementsByTagName('body')[0];
+    let body = document.getElementById('container');
 
     let table = document.getElementsByTagName('table')[0];
 
@@ -197,7 +197,7 @@ const drawTable = function() {
             else {
                 let td = document.createElement('td');
 
-                td.appendChild(document.createTextNode("i"+(i-1)+" j"+j)); 
+                //td.appendChild(document.createTextNode("i"+(i-1)+" j"+j)); 
                 
                 showShips(td, i, j);
                 //dontShowShips(td);
@@ -387,7 +387,7 @@ function sunkShip(i) {
 const winMessage = function() {
 
 
-    let body = document.getElementsByTagName('body')[0];
+    let body = document.getElementById('container');
     let div = document.createElement('div');
     div.innerHTML = "<h1>YOU WON!!!</h1>";
 
