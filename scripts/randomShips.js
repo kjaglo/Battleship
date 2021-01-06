@@ -103,21 +103,9 @@ function placeShip(shipsToFind, board, params, dxdy) {
         board[params.x + item.x][params.y + item.y] = 5;
         squares.push([params.x + item.x - 1, params.y + item.y - 1])
     }
-
-    switch (dxdy.length) {
-        case 1:
-            shipsToFind.push([squares, [0]]);
-            break;
-        case 2:
-            shipsToFind.push([squares, [0, 0]]);
-            break;
-        case 3:
-            shipsToFind.push([squares, [0, 0, 0]]);
-            break;
-        case 4:
-            shipsToFind.push([squares, [0, 0, 0, 0]]);
-            break;
-    }
+    shipsToFind.push([squares, Array(squares.length).fill(0)]);
+   
+    
     return shipsToFind;
 }
 
@@ -341,7 +329,7 @@ const dontShowShips = function (td) {
 
 const drawTable = function (board) {
 
-    let body = document.getElementsByTagName('body')[0];
+    let body = document.getElementById('container');
     let table = document.getElementsByTagName('table')[0];
     //console.log("table", table);
     if (table) {
@@ -642,6 +630,8 @@ function randomShipsOnClick() {
     //console.log("TTTTTTTT", texts)
 }
 
+
+
 let board = createEmptyBoardAndBorders();
 drawTable(board);
 
@@ -649,3 +639,8 @@ drawTable(board);
 
 
 
+function resetShipsOnClick() {
+    let board = createEmptyBoardAndBorders();
+    drawTable(board);
+
+}
