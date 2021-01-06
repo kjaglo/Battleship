@@ -1,34 +1,30 @@
-button.ship-btn {
-    background-color: rgb(196, 189, 181);
-    border-radius: 10%;
+button {
+    background-color: rgb(153, 153, 153);
+    border-radius: 5%;
     padding: 10px;
     margin: 5px;
     font-size: 17px;
     border: none;
+    outline:none;
+    color:white
+
 }
 
-button.ship-btn:hover {
+button:hover {
     background-color: rgb(119, 118, 116);
     color:white;
-   
+    border: none;
+
+    outline:none;
+
 }
 
-button.ship-btn:active {
+button:active {
     background-color: rgb(73, 73, 73);
     color:white;
+    border: none;
+outline:none;
 
     
 }
 
-button.ship-btn:focus {
-    background-color: rgb(145, 22, 22);
-    color:white;
-
-    
-}
-
-button.ship-btn-clicked {
-    background-color: rgb(214, 158, 45);
-    color:white;
-   
-}

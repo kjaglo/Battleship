@@ -1,35 +1,49 @@
-.ship {
+.ship-left {
     height: 30px;
-    background-color: gray;
+    /* background-color: gray; */
     margin:10px;
     border-radius: 5%;
-
+    display: flex;
+    justify-content: center;
 }
 
-.ship1 {
+.ship-left-square {
+    height: 30px;
+    background-color: rgb(170, 64, 64);
+    margin:1px;
+    border-radius: 10%;
+    width: 30px;
+
+}
+.ship1-left {
     width: 30px;
 }
 
-.ship2 {
+.ship2-left {
     width: 60px;
     
 }
 
-.ship3 {
+.ship3-left {
     width: 90px;
     
 }
 
-.ship4 {
+.ship4-left {
     width: 120px;
 }
 
-.ship:hover {
+.ship-left:hover >.ship-left-square {
     background:black;
-    cursor: move;
+    cursor: pointer;
 }
 
-.ship-disappeared {
+.ship-left:active >.ship-left-square {
+    background:green;
+    cursor: pointer;
+}
+
+.ship-left-disappeared {
     display: none;
 }
 
@@ -47,9 +61,9 @@ table {
     grid-area: sidebar;
 
 }
-.ships {
+.ships-left {
     grid-area: main;
-    background-color:rgb(255, 196, 190);
+    /* background-color:rgb(255, 196, 190); */
 height: 415px;
 margin: 40px;
 border-radius: 1%;
@@ -57,7 +71,4 @@ border: black 1px solid;
 
 
 
-}
-.ship-sunked {
-    background-color: coral;
 }

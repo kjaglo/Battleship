@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Battleship</title>
+    <link rel="stylesheet" href="styles/site.css">
+    <link rel="stylesheet" href="styles/td.css">
+    <link rel="stylesheet" href="styles/text.css">
+    <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/shipsLeft.css">
+</head>
+
+<body>
+
+    <nav>
+
+    </nav>
+    <h1 id="battleship">
+        Battleship
+    </h1>  <div >
+            <ul>
+          
+          
+              <li class="default-text">SHIP 4</li>
+          
+              <li class="default-text">SHIP 3</li>
+              <li class="default-text">SHIP 3</li>
+          
+                <li class="default-text">SHIP 2</li>
+                <li class="default-text">SHIP 2</li>
+                <li class="default-text">SHIP 2</li>
+          
+                <li class="default-text">SHIP 1</li>
+                <li class="default-text">SHIP 1</li>
+                <li class="default-text">SHIP 1</li>
+                <li class="default-text">SHIP 1</li>
+               
+          
+                
+           </ul>
+            
+          </div>
+          
+          
+              <div id="printingArea"></div>
+              <button onclick="randomShipsOnClick()">Random</button>
+              <button onclick="resetShipsOnClick()">Reset</button>
+              <!-- <table>
+                      
+              </table> -->
+    <div id="container">
+
+      
+        <table>
+
+        </table>
+        <div class="ships-left">
+
+            <div id="ship4-left" class="ship-left ship4-left">
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+
+
+            </div>
+            <div class="ship-left ship3-left">
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+            </div>
+            <div class="ship-left ship3-left">
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+            </div>
+
+            <div class="ship-left ship2-left">
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+            </div>
+            <div class="ship-left ship2-left">
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+            </div>
+            <div class="ship-left ship2-left">
+                <div class="ship-left-square"></div>
+                <div class="ship-left-square"></div>
+            </div>
+
+            <div class="ship-left ship1-left" id="a">
+                <div class="ship-left-square"></div>
+            </div>
+            <div class="ship-left ship1-left" id="b">
+                <div class="ship-left-square"></div>
+            </div>
+            <div class="ship-left ship1-left" id="c">
+                <div class="ship-left-square"></div>
+            </div>
+            <div class="ship-left ship1-left" id="d">
+                <div class="ship-left-square"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/randomShips.js"></script>
+
+</body>
+
+</html>
