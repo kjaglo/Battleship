@@ -33,8 +33,21 @@ function createEmptyBoardAndBorders() {
     }
     return board;
 }
-
+function clearPrintBoard() {
+    if (document.getElementById("printingArea")) {
+        document.getElementById("printingArea").remove();
+    }
+}
 function printBoard(board) {
+    clearPrintBoard();
+
+    let body = document.getElementsByTagName('body')[0];
+
+    let area = document.createElement('div');
+    area.id = "printingArea";
+
+    body.appendChild(area);
+
     for (let row = 0; row < boardSize; row++) {
         for (let col = 0; col < boardSize; col++) {
             document.getElementById("printingArea").innerHTML += board[row][col];
@@ -632,49 +645,75 @@ const playGuess = function (board, shipsToFind, squares, texts) {
     }
 }
 
-function checkDifferentShoot(randomSquare, squareShootArray) {
-    for(let i in squareShootArray){
-        console.log(squareShootArray[i].x, squareShootArray[i].y);
-        if(randomSquare.x==squareShootArray[i].x && randomSquare.y==squareShootArray[i].y){
-            console.log("the same shoot");
-            return false;
-        }
-    }
-    return true;
-}
-function randomSquareShoot(squareShootArray) {
-   
-    const randomRow = Math.round(Math.random() * 100) % 10 + 1;
-    const randomCol = Math.round(Math.random() * 100) % 10 + 1;
-    const randomSquare = {x:randomRow, y:randomCol};
-    
-   if(checkDifferentShoot(randomSquare, squareShootArray)){
-    squareShootArray.push(randomSquare);}
-    else{
-
-        
-    }
-    return randomSquare;
-
-}
-let squareShootArray = [];
-function shootOnClick(){
-    
-
-    const randomSquare = randomSquareShoot(squareShootArray);
-console.log(randomSquare);
-}
-
 
 
 
 
 let board;
 let boardOponent;
+let boardComputerShoot = createEmptyBoardAndBorders();
+
 let shipsToFind;
+let shipsToFindO;
 let squaresO;
 let textsO;
+let texts;
+let squares;
+
 let randomOrPlaceYourShips = 0;
+let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+    
+
+function randomSquareShoot(board, shoot) {
+
+    let randomSquare;
+    let squareShooted = 0;
+    while (squareShooted == 0&&shoot<=100) {
+        const randomRow = Math.round(Math.random() * 100) % 10 + 1;
+        const randomCol = Math.round(Math.random() * 100) % 10 + 1;
+         randomSquare = { x: randomRow, y: randomCol };
+        if (board[randomRow][randomCol] == 0) {
+            squareShooted = 1;
+            board[randomRow][randomCol] = 1;
+            missShip(board, squares, randomRow-1, randomCol-1);
+
+
+        } else if (board[randomRow][randomCol] == 5) {
+            squareShooted = 1;
+            board[randomRow][randomCol] = 6;//hit
+            hitShip(board,shipsToFind, texts, squares, randomRow-1, randomCol-1, currentSumShip, winningSumShip);
+
+
+        } else {
+
+            console.log("the same shoot");
+
+        }
+        
+
+    }
+
+    board[0][0] = shoot;
+    printBoard(board);
+    return randomSquare;
+
+}
+let shoot = 0;
+function shootOnClick() {
+    //document.getElementsByName("body").innerHTML+=shoot;
+    
+    shoot++;
+    const randomSquare = randomSquareShoot(board,shoot);
+    console.log(randomSquare);
+    
+    if(shoot==100){
+        document.querySelector("#shoot-btn").className = "disappeared";
+
+    }
+}
+
+
 function randomShipsOnClick() {
     //console.log("random");
     winMessageClear();
@@ -684,6 +723,8 @@ function randomShipsOnClick() {
     //printBoard(board);
     drawTable(board, "player");
     randomOrPlaceYourShips = 1;
+    squares=getSquares("table-player");
+    texts = getTexts();
     //console.log("TTTTTTTT", texts)
 }
 
@@ -729,7 +770,7 @@ function buttonsChanges(play) {
 function randomOponentShips() {
 
     boardOponent = createEmptyBoardAndBorders();
-    shipsToFind = createRandomShips(boardOponent);
+    shipsToFindO = createRandomShips(boardOponent);
     drawTable(boardOponent, "oponent");
     squaresO = getSquares("table-oponent");
     tO = getTexts();
@@ -744,7 +785,7 @@ function playOnClick() {
         randomOrPlaceYourShips = 0;
         buttonsChanges(false);
         randomOponentShips();
-        playGuess(boardOponent, shipsToFind, squaresO, textsO);
+        playGuess(boardOponent, shipsToFindO, squaresO, textsO);
     }
     else {
         alert("Place or random your ships");
