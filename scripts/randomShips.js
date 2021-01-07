@@ -327,17 +327,32 @@ const dontShowShips = function (td) {
     td.className = "default";
 }
 
-const drawTable = function (board) {
+const drawTable = function (board, player) {
 
     let body = document.getElementById('container');
-    let table = document.getElementsByTagName('table')[0];
-    //console.log("table", table);
-    if (table) {
-        table.remove();
+    let table;
+    if(player=="oponent"){
+         table = document.getElementById('table-oponent');
         //console.log("table", table);
-
+        if (table) {
+            table.remove();
+            //console.log("table", table);
+    
+        }
+        table = document.createElement('table');
+        table.id="table-oponent";
+    } else {
+         table = document.getElementById('table-player');
+        //console.log("table", table);
+        if (table) {
+            table.remove();
+            //console.log("table", table);
+    
+        }
+        table = document.createElement('table');
+        table.id="table-player";
     }
-    table = document.createElement('table');
+    
 
     //table.setAttribute('border', '1');
 
@@ -621,7 +636,7 @@ function randomShipsOnClick() {
     let shipsToFind = createRandomShips(board);
     //createAndShowNear();
     //printBoard(board);
-    drawTable(board);
+    drawTable(board, "player");
     const squares = getSquares();
     let t = getTexts();
 
@@ -633,7 +648,7 @@ function randomShipsOnClick() {
 
 
 let board = createEmptyBoardAndBorders();
-drawTable(board);
+drawTable(board, "player");
 
 //console.log("ships", getLeftShips());
 
@@ -641,6 +656,9 @@ drawTable(board);
 
 function resetShipsOnClick() {
     let board = createEmptyBoardAndBorders();
-    drawTable(board);
+    drawTable(board, "player");
 
 }
+
+let boardOponent = createEmptyBoardAndBorders();
+drawTable(boardOponent, "oponent");

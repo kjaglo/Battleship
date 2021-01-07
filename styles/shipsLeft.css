@@ -53,12 +53,17 @@
     grid-template-rows: auto;
     grid-template-areas: 
     "header header header header"
-    "main main sidebar sidebar"
+    "main  main player oponent"
     "footer footer footer footer";
 }
 
-table {
-    grid-area: sidebar;
+#table-player {
+    grid-area: player;
+
+}
+
+#table-oponent {
+    grid-area: oponent;
 
 }
 .ships-left {
