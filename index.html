@@ -18,7 +18,7 @@
     </nav>
     <h1 id="battleship">
         Battleship
-    </h1>  <div >
+    </h1>  <div id="left-ships-container" class="disappeared">
             <ul>
           
           
@@ -44,9 +44,10 @@
           
           
               <div id="printingArea"></div>
-              <button onclick="randomShipsOnClick()">Random</button>
-              <button onclick="resetShipsOnClick()">Reset</button>
-              <button onclick="playOnClick()">Play</button>
+              <button id="random-btn" onclick="randomShipsOnClick()">Random</button>
+              <button id="reset-btn" onclick="resetShipsOnClick()">Reset</button>
+              <button id="play-btn" onclick="playOnClick()">Play</button>
+              <button id="quit-btn" class="disappeared" onclick="quitOnClick()">Quit</button>
               <!-- <table>
                       
               </table> -->
