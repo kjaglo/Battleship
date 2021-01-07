@@ -239,14 +239,16 @@ function createRandomShips(board) {
 // }
 
 
-const getSquares = function () {
+const getSquares = function (tableId) {
+
+    let table = document.getElementById(tableId);
     let squares = [];
 
     let k = 0;
     for (let i = 0; i < 10; i++) {
         let squaresRow = [];
         for (let j = 0; j < 10; j++) {
-            squaresRow.push(document.getElementsByTagName('TD')[k]);
+            squaresRow.push(table.getElementsByTagName('TD')[k]);
             k++;
 
         }
@@ -628,26 +630,23 @@ const playGuess = function (board, shipsToFind, squares, texts) {
         }
     }
 }
-
+let board;
+let shipsToFind;
 function randomShipsOnClick() {
     //console.log("random");
     winMessageClear();
-    let board = createEmptyBoardAndBorders();
-    let shipsToFind = createRandomShips(board);
+     board = createEmptyBoardAndBorders();
+     shipsToFind = createRandomShips(board);
     //createAndShowNear();
     //printBoard(board);
     drawTable(board, "player");
-    const squares = getSquares();
-    let t = getTexts();
-
-    playGuess(board, shipsToFind, squares, t);
-    let texts = resetTexts(t);
+    
     //console.log("TTTTTTTT", texts)
 }
 
 
 
-let board = createEmptyBoardAndBorders();
+ board = createEmptyBoardAndBorders();
 drawTable(board, "player");
 
 //console.log("ships", getLeftShips());
@@ -659,6 +658,15 @@ function resetShipsOnClick() {
     drawTable(board, "player");
 
 }
+ let boardOponent = createEmptyBoardAndBorders();
+ shipsToFind = createRandomShips(boardOponent);
+ drawTable(boardOponent, "oponent");
+ squaresO = getSquares("table-oponent");
+ tO = getTexts();
 
-let boardOponent = createEmptyBoardAndBorders();
-drawTable(boardOponent, "oponent");
+    let textsO = resetTexts(tO);
+ playGuess(boardOponent, shipsToFind, squaresO, tO);
+
+function playOnClick() {
+
+}
