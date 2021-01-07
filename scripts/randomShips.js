@@ -62,6 +62,7 @@ function randomParameters() {
 }
 
 
+
 function checkNear(board, params, dxdyShip) {
     around = 0;
     const dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
@@ -630,6 +631,44 @@ const playGuess = function (board, shipsToFind, squares, texts) {
         }
     }
 }
+
+function checkDifferentShoot(randomSquare, squareShootArray) {
+    for(let i in squareShootArray){
+        console.log(squareShootArray[i].x, squareShootArray[i].y);
+        if(randomSquare.x==squareShootArray[i].x && randomSquare.y==squareShootArray[i].y){
+            console.log("the same shoot");
+            return false;
+        }
+    }
+    return true;
+}
+function randomSquareShoot(squareShootArray) {
+   
+    const randomRow = Math.round(Math.random() * 100) % 10 + 1;
+    const randomCol = Math.round(Math.random() * 100) % 10 + 1;
+    const randomSquare = {x:randomRow, y:randomCol};
+    
+   if(checkDifferentShoot(randomSquare, squareShootArray)){
+    squareShootArray.push(randomSquare);}
+    else{
+
+        
+    }
+    return randomSquare;
+
+}
+let squareShootArray = [];
+function shootOnClick(){
+    
+
+    const randomSquare = randomSquareShoot(squareShootArray);
+console.log(randomSquare);
+}
+
+
+
+
+
 let board;
 let boardOponent;
 let shipsToFind;
@@ -659,6 +698,8 @@ drawTable(board, "player");
 
 function resetShipsOnClick() {
     let board = createEmptyBoardAndBorders();
+    randomOrPlaceYourShips = 0;
+
     drawTable(board, "player");
 
 }
@@ -723,3 +764,4 @@ function quitOnClick() {
         document.getElementById("table-oponent").remove();
     }
 }
+
