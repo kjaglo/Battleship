@@ -104,8 +104,8 @@ function placeShip(shipsToFind, board, params, dxdy) {
         squares.push([params.x + item.x - 1, params.y + item.y - 1])
     }
     shipsToFind.push([squares, Array(squares.length).fill(0)]);
-   
-    
+
+
     return shipsToFind;
 }
 
@@ -256,7 +256,7 @@ const getSquares = function (tableId) {
     }
     return squares;
 }
- 
+
 const getTexts = function () {
 
     let texts = [];
@@ -333,28 +333,28 @@ const drawTable = function (board, player) {
 
     let body = document.getElementById('container');
     let table;
-    if(player=="oponent"){
-         table = document.getElementById('table-oponent');
+    if (player == "oponent") {
+        table = document.getElementById('table-oponent');
         //console.log("table", table);
         if (table) {
             table.remove();
             //console.log("table", table);
-    
+
         }
         table = document.createElement('table');
-        table.id="table-oponent";
+        table.id = "table-oponent";
     } else {
-         table = document.getElementById('table-player');
+        table = document.getElementById('table-player');
         //console.log("table", table);
         if (table) {
             table.remove();
             //console.log("table", table);
-    
+
         }
         table = document.createElement('table');
-        table.id="table-player";
+        table.id = "table-player";
     }
-    
+
 
     //table.setAttribute('border', '1');
 
@@ -631,22 +631,26 @@ const playGuess = function (board, shipsToFind, squares, texts) {
     }
 }
 let board;
+let boardOponent;
 let shipsToFind;
+let squaresO;
+let textsO;
+let randomOrPlaceYourShips = 0;
 function randomShipsOnClick() {
     //console.log("random");
     winMessageClear();
-     board = createEmptyBoardAndBorders();
-     shipsToFind = createRandomShips(board);
+    board = createEmptyBoardAndBorders();
+    shipsToFind = createRandomShips(board);
     //createAndShowNear();
     //printBoard(board);
     drawTable(board, "player");
-    
+    randomOrPlaceYourShips = 1;
     //console.log("TTTTTTTT", texts)
 }
 
 
 
- board = createEmptyBoardAndBorders();
+board = createEmptyBoardAndBorders();
 drawTable(board, "player");
 
 //console.log("ships", getLeftShips());
@@ -658,15 +662,64 @@ function resetShipsOnClick() {
     drawTable(board, "player");
 
 }
- let boardOponent = createEmptyBoardAndBorders();
- shipsToFind = createRandomShips(boardOponent);
- drawTable(boardOponent, "oponent");
- squaresO = getSquares("table-oponent");
- tO = getTexts();
 
-    let textsO = resetTexts(tO);
- playGuess(boardOponent, shipsToFind, squaresO, tO);
+function buttonsChanges(play) {
+    if (play == true) {
+        document.querySelector("#random-btn").className = "";
+        document.querySelector("#reset-btn").className = "";
+        document.querySelector("#play-btn").className = "";
+        document.querySelector("#left-ships-container").className = "disappeared";
+
+        document.querySelector("#quit-btn").className = "disappeared";
+    } else {
+        document.querySelector("#random-btn").className = "disappeared";
+        document.querySelector("#reset-btn").className = "disappeared";
+        document.querySelector("#play-btn").className = "disappeared";
+        document.querySelector("#left-ships-container").className = "";
+
+        document.querySelector("#quit-btn").className = "";
+    }
+
+
+    //document.querySelector("#play-btn").className = "";
+
+}
+
+function randomOponentShips() {
+
+    boardOponent = createEmptyBoardAndBorders();
+    shipsToFind = createRandomShips(boardOponent);
+    drawTable(boardOponent, "oponent");
+    squaresO = getSquares("table-oponent");
+    tO = getTexts();
+
+    textsO = resetTexts(tO);
+}
+
 
 function playOnClick() {
 
+    if (randomOrPlaceYourShips == 1) {
+        randomOrPlaceYourShips = 0;
+        buttonsChanges(false);
+        randomOponentShips();
+        playGuess(boardOponent, shipsToFind, squaresO, textsO);
+    }
+    else {
+        alert("Place or random your ships");
+    }
+
+}
+
+function quitOnClick() {
+
+    let answer = confirm("Are you sure you want to end game?");
+    console.log(answer);
+    if (answer == true) {
+        buttonsChanges(true);
+
+        resetShipsOnClick();
+        //randomOponentShips();
+        document.getElementById("table-oponent").remove();
+    }
 }

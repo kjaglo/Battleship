@@ -11,7 +11,9 @@ button {
 
 
 }
-
+.disappeared {
+    display: none;
+}
 button:hover {
     background-color: rgb(119, 118, 116);
     color:white;
