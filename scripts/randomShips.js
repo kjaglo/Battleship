@@ -271,15 +271,6 @@ const getSquares = function (tableId) {
     return squares;
 }
 
-const getTexts = function () {
-
-    let texts = [];
-
-    for (let m = 0; m < 10; m++) {
-        texts.push(document.getElementsByTagName('li')[m]);
-    }
-    return texts;
-}
 
 const resetTexts = function (texts) {
     //console.log("mmmmmmmmm before", texts);
@@ -293,25 +284,46 @@ const resetTexts = function (texts) {
     return texts;
 }
 
+
+
+
 const getLeftShips = function () {
 
     let leftShips = [];
 
-    leftShips.push(document.querySelector(".ship4"));
+    leftShips.push(document.querySelector("#s4"));
+    leftShips.push(document.querySelector("#s3a"));
+    leftShips.push(document.querySelector("#s3b"));
+    leftShips.push(document.querySelector("#s2a"));
+    leftShips.push(document.querySelector("#s2b"));
+    leftShips.push(document.querySelector("#s2c"));
+    leftShips.push(document.querySelector("#s1a"));
+    leftShips.push(document.querySelector("#s1b"));
+    leftShips.push(document.querySelector("#s1c"));
+    leftShips.push(document.querySelector("#s1d"));
 
-    for (let m = 0; m < 2; m++) {
-
-        leftShips.push(document.querySelector(".ship3"));
-    }
-    for (let m = 0; m < 3; m++) {
-
-        leftShips.push(document.querySelector(".ship2"));
-    }
-    for (let m = 0; m < 4; m++) {
-
-        leftShips.push(document.querySelector(".ship1"));
-    }
+    
     return leftShips
+}
+
+
+const getLeftShipsOponent = function () {
+
+    let leftShipsOponent = [];
+
+    leftShipsOponent.push(document.querySelector("#so4"));
+    leftShipsOponent.push(document.querySelector("#so3a"));
+    leftShipsOponent.push(document.querySelector("#so3b"));
+    leftShipsOponent.push(document.querySelector("#so2a"));
+    leftShipsOponent.push(document.querySelector("#so2b"));
+    leftShipsOponent.push(document.querySelector("#so2c"));
+    leftShipsOponent.push(document.querySelector("#so1a"));
+    leftShipsOponent.push(document.querySelector("#so1b"));
+    leftShipsOponent.push(document.querySelector("#so1c"));
+    leftShipsOponent.push(document.querySelector("#so1d"));
+
+    
+    return leftShipsOponent;
 }
 
 const showShips = function (board, td, i, j) {
@@ -569,6 +581,7 @@ function sunkShip(shipsToFind, squares, i) {
         const col = shipsToFind[i][0][k][1];
 
         squares[row][col].className = "hit-and-sunk"
+        
     }
 }
 
@@ -577,16 +590,20 @@ function winMessageClear() {
         document.getElementById("won").remove();
     }
 }
-const winMessage = function () {
+const winMessage = function (player) {
 
     let body = document.getElementsByTagName('body')[0];
     let div = document.createElement('div');
-    div.innerHTML = "<h1 id='won'>YOU WON!!!</h1>";
+    if(player=="player"){
+        div.innerHTML = "<h1 id='won'>YOU WON!!!</h1>";
+    } else {
+        div.innerHTML = "<h1 id='won'>YOU LOSE!!!</h1>";
 
+    }
     body.appendChild(div);
 }
 
-function hitShip(board, shipsToFind, texts, squares, I, J, currentSumShip, winningSumShip) {
+function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
 
     const row = I;
     const col = J;
@@ -603,15 +620,12 @@ function hitShip(board, shipsToFind, texts, squares, I, J, currentSumShip, winni
 
                     if (currentHitSumShip(shipsToFind, i) == shipsToFind[i][j].length) {
                         sunkShip(shipsToFind, squares, i);
-                        //console.log("TTTTTTT in hit", texts)
-                        //console.log("TTTTTTT in hit one", i, texts[i], shipsToFind)
-
-                        texts[i].className = "crossed-text";
+    leftShips[i].className+=" ship-left-sunked";
                         //console.log("TTTTTTT after hit", texts)
 
                     }
                     if (currentHitSumAll(shipsToFind, currentSumShip, winningSumShip)) {
-                        winMessage();
+                        winMessage(player);
                     }
                 }
             }
@@ -626,7 +640,7 @@ const missShip = function (board, squares, i, j) {
 
 }
 
-const playGuess = function (board, shipsToFind, squares, texts) {
+const playGuess = function (player, board, shipsToFind, squares, leftShips, texts) {
 
     let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
@@ -634,7 +648,7 @@ const playGuess = function (board, shipsToFind, squares, texts) {
         for (let j = 0; j < 10; j++) {
 
             if (board[i + 1][j + 1] == shipSquare) {
-                squares[i][j].addEventListener("click", function () { hitShip(board, shipsToFind, texts, squares, i, j, currentSumShip, winningSumShip); }, { once: true });
+                squares[i][j].addEventListener("click", function () { hitShip(player, board, shipsToFind,leftShips, squares, i, j, currentSumShip, winningSumShip); }, { once: true });
 
             }
             else if (board[i + 1][j + 1] == defaultSquare || board[i + 1][j + 1] == nearShipSquare) {
@@ -656,17 +670,22 @@ let boardComputerShoot = createEmptyBoardAndBorders();
 let shipsToFind;
 let shipsToFindO;
 let squaresO;
-let textsO;
-let texts;
+let leftShips = getLeftShips();
+let leftShipsOponent = getLeftShipsOponent();
+console.log(leftShipsOponent)
+
 let squares;
 
 let randomOrPlaceYourShips = 0;
 let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
-    
+    let board2;
 
-function randomSquareShoot(board, shoot) {
 
+function randomSquareShoot(player, board,board2, shoot) {
+
+
+    //let around=[{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: 0, y: -1 }];
     let randomSquare;
     let squareShooted = 0;
     while (squareShooted == 0&&shoot<=100) {
@@ -677,12 +696,18 @@ function randomSquareShoot(board, shoot) {
             squareShooted = 1;
             board[randomRow][randomCol] = 1;
             missShip(board, squares, randomRow-1, randomCol-1);
+            let max=0;
+            for(item in around){
+                if(board2[item.x+randomRow][item.y+randomCol]>0){
+                    max=board2[item.x+randomRow][item.y+randomCol]+1;
 
+                }
+            }
 
         } else if (board[randomRow][randomCol] == 5) {
             squareShooted = 1;
             board[randomRow][randomCol] = 6;//hit
-            hitShip(board,shipsToFind, texts, squares, randomRow-1, randomCol-1, currentSumShip, winningSumShip);
+            hitShip(player, board,shipsToFind,leftShips, squares, randomRow-1, randomCol-1, currentSumShip, winningSumShip);
 
 
         } else {
@@ -695,7 +720,8 @@ function randomSquareShoot(board, shoot) {
     }
 
     board[0][0] = shoot;
-    printBoard(board);
+
+    printBoard(board2);
     return randomSquare;
 
 }
@@ -704,7 +730,7 @@ function shootOnClick() {
     //document.getElementsByName("body").innerHTML+=shoot;
     
     shoot++;
-    const randomSquare = randomSquareShoot(board,shoot);
+    const randomSquare = randomSquareShoot("oponent",board, board2,shoot);
     console.log(randomSquare);
     
     if(shoot==100){
@@ -718,14 +744,16 @@ function randomShipsOnClick() {
     //console.log("random");
     winMessageClear();
     board = createEmptyBoardAndBorders();
+    board2 = createEmptyBoardAndBorders();
+
     shipsToFind = createRandomShips(board);
     //createAndShowNear();
     //printBoard(board);
+    printBoard(board2);
+
     drawTable(board, "player");
     randomOrPlaceYourShips = 1;
     squares=getSquares("table-player");
-    texts = getTexts();
-    //console.log("TTTTTTTT", texts)
 }
 
 
@@ -750,14 +778,14 @@ function buttonsChanges(play) {
         document.querySelector("#random-btn").className = "";
         document.querySelector("#reset-btn").className = "";
         document.querySelector("#play-btn").className = "";
-        document.querySelector("#left-ships-container").className = "disappeared";
+        //document.querySelector("#left-ships-container").className = "disappeared";
 
         document.querySelector("#quit-btn").className = "disappeared";
     } else {
         document.querySelector("#random-btn").className = "disappeared";
         document.querySelector("#reset-btn").className = "disappeared";
         document.querySelector("#play-btn").className = "disappeared";
-        document.querySelector("#left-ships-container").className = "";
+        //document.querySelector("#left-ships-container").className = "";
 
         document.querySelector("#quit-btn").className = "";
     }
@@ -773,9 +801,8 @@ function randomOponentShips() {
     shipsToFindO = createRandomShips(boardOponent);
     drawTable(boardOponent, "oponent");
     squaresO = getSquares("table-oponent");
-    tO = getTexts();
 
-    textsO = resetTexts(tO);
+    //textsO = resetTexts(tO);
 }
 
 
@@ -785,7 +812,7 @@ function playOnClick() {
         randomOrPlaceYourShips = 0;
         buttonsChanges(false);
         randomOponentShips();
-        playGuess(boardOponent, shipsToFindO, squaresO, textsO);
+        playGuess("player",boardOponent, shipsToFindO, squaresO, leftShipsOponent);
     }
     else {
         alert("Place or random your ships");
@@ -806,3 +833,7 @@ function quitOnClick() {
     }
 }
 
+
+function checkIfshooted(){
+
+}

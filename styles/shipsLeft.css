@@ -9,7 +9,7 @@
 
 .ship-left-square {
     height: 30px;
-    background-color: rgb(170, 64, 64);
+    background-color: cadetblue;
     margin:1px;
     border-radius: 10%;
     width: 30px;
@@ -38,6 +38,11 @@
     cursor: pointer;
 }
 
+.ship-left-sunked >.ship-left-square {
+    background:rgb(238, 8, 8);
+}
+
+
 .ship-left:active >.ship-left-square {
     background:green;
     cursor: pointer;
@@ -53,12 +58,13 @@
     grid-template-rows: auto;
     grid-template-areas: 
     "header header header header"
-    "main  main player oponent"
+    " ships-left  player oponent ships-left-oponent"
     "footer footer footer footer";
 }
 
 #table-player {
     grid-area: player;
+    margin-left: 100px;
 
 }
 
@@ -67,12 +73,22 @@
 
 }
 .ships-left {
-    grid-area: main;
+    grid-area: ships-left;
     /* background-color:rgb(255, 196, 190); */
-height: 415px;
 margin: 40px;
 border-radius: 1%;
-border: black 1px solid;
+margin-right: 100px;
+/* border: black 1px solid; */
+
+
+
+}
+.ships-left-oponent {
+    grid-area: ships-left-oponent;
+    /* background-color:rgb(255, 196, 190); */
+margin: 40px;
+border-radius: 1%;
+/* border: black 1px solid; */
 
 
 
