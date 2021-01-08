@@ -82,7 +82,6 @@ function checkNear(board, params, dxdyShip) {
     for (square of dxdyShip) {
 
         for (item of dxdy) {
-            //console.log("here", params.x + item.x + square.x, params.y + item.y + square.y)
 
             if (board[params.x + item.x + square.x][params.y + item.y + square.y] == 0 || board[params.x + item.x + square.x][params.y + item.y + square.y] == 9) {
                 around += 1;
@@ -93,25 +92,8 @@ function checkNear(board, params, dxdyShip) {
 }
 
 
-
-// function placeNear(params, dxdyShip) {
-//     const dxdy = [{x:-1, y:0},{x:-1, y:1},{x:0, y:1},{x:1, y:1},{x:1, y:0},{x:1, y:-1},{x:0, y:-1},{x:-1, y:-1}];
-//     for(square of dxdyShip){
-
-//     for(item of dxdy){
-
-//             if(board[params.x+item.x+square.x][params.y+item.y+square.y]==0 ) {
-//                 board[params.x+item.x+square.x][params.y+item.y+square.y]=2;
-//             } 
-//         }
-//     }
-// }
-
-
-
 function placeShip(shipsToFind, board, params, dxdy) {
     const squares = [];
-    //console.log("DYDYDYDY,", dxdy.length);
 
     for (item of dxdy) {
         board[params.x + item.x][params.y + item.y] = 5;
@@ -132,12 +114,10 @@ function sizeThatCanBePlaced(board, params, dxdy) {
             size++;
         }
     }
-    //console.log("size placed: ", size)
     return size;
 }
 
 function chooseShip(params, shipLength) {
-    //console.log("len: ", shipLength)
 
     const dxdy1 = [{ x: 0, y: 0 }]
 
@@ -186,7 +166,6 @@ function chooseShip(params, shipLength) {
                     break;
             }
     }
-    //console.log("ship:", dxdy.x);
     return dxdy;
 }
 
@@ -196,62 +175,30 @@ function createRandomShips(board) {
     shipsLengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 
     for (i in shipsPlaced) {
-        //i=0;
-        //console.log(shipsPlaced[i]);
-        //console.log(shipsLengths[i]);
 
         while (shipsPlaced[i] == 0) {
             const params = randomParameters();
 
-            //console.log(params);
 
             const dxdy = chooseShip(params, shipsLengths[i]);
             const sizeThatFits = sizeThatCanBePlaced(board, params, dxdy);
 
 
             if (sizeThatFits == shipsLengths[i]) {
-                //console.log("fit", sizeThatFits);
                 const near = checkNear(board, params, dxdy);
                 if (8 * shipsLengths[i] == near) {
                     shipsPlaced[i] = 1;
-                    //console.log("Ship can be placed here");
                     shipsToFind = placeShip(shipsToFind, board, params, dxdy);
-                    //placeNear(params, dxdy);
-                    //printBoard();
+
                 }
 
             } else {
-                //console.log("Ship cannot be placed here");
             }
-            //console.log(shipsPlaced[i]);
 
         }
     }
     return shipsToFind;
 }
-
-
-// const createShips = function () {
-
-//     //ships 
-//     const ship1a = [[[0, 0]], [0]];
-//     const ship1b = [[[0, 3]], [0]];
-//     const ship1c = [[[2, 9]], [0]];
-//     const ship1d = [[[2, 6]], [0]];
-
-//     const ship2a = [[[9, 9], [8, 9]], [0, 0]];
-//     const ship2b = [[[6, 6], [6, 7]], [0, 0]];
-//     const ship2c = [[[8, 0], [7, 0]], [0, 0]];
-
-//     const ship3a = [[[0, 7], [0, 8], [0, 9]], [0, 0, 0]];
-//     const ship3b = [[[2, 2], [3, 2], [4, 2]], [0, 0, 0]];
-
-//     const ship4 = [[[9, 3], [9, 4], [9, 5], [9, 6]], [0, 0, 0, 0]];
-
-//     shipsToFind = [ship1a, ship1b, ship1c, ship1d, ship2a, ship2b, ship2c, ship3a, ship3b, ship4];
-
-// }
-
 
 const getSquares = function (tableId) {
 
@@ -273,13 +220,10 @@ const getSquares = function (tableId) {
 
 
 const resetTexts = function (texts) {
-    //console.log("mmmmmmmmm before", texts);
 
     for (let m = 0; m < 10; m++) {
-        //console.log("m", m, texts[m].className);
         texts[m].className = "default-text";
     }
-    //console.log("mmmmmmmmm", texts);
 
     return texts;
 }
@@ -361,20 +305,16 @@ const drawTable = function (board, player) {
     let table;
     if (player == "oponent") {
         table = document.getElementById('table-oponent');
-        //console.log("table", table);
         if (table) {
             table.remove();
-            //console.log("table", table);
 
         }
         table = document.createElement('table');
         table.id = "table-oponent";
     } else {
         table = document.getElementById('table-player');
-        //console.log("table", table);
         if (table) {
             table.remove();
-            //console.log("table", table);
 
         }
         table = document.createElement('table');
@@ -428,132 +368,7 @@ const drawTable = function (board, player) {
     table.appendChild(tbdy);
 
     body.appendChild(table)
-    //console.log("table", table);
 
-}
-
-const up = function (i, j) {
-    i++;
-    j++;
-    if (board[i - 1][j] != shipSquare) {
-        board[i - 1][j] = nearShipSquare;
-    }
-}
-
-const leftup = function (i, j) {
-    i++;
-    j++;
-    if (board[i - 1][j - 1] != shipSquare) {
-        board[i - 1][j - 1] = nearShipSquare;
-    }
-}
-
-const left = function (i, j) {
-    i++;
-    j++;
-    if (board[i][j - 1] != shipSquare) {
-        board[i][j - 1] = nearShipSquare;
-    }
-}
-
-const leftdown = function (i, j) {
-    i++;
-    j++;
-    if (board[i + 1][j - 1] != shipSquare) {
-        board[i + 1][j - 1] = nearShipSquare;
-    }
-}
-
-const down = function (i, j) {
-    i++;
-    j++;
-    if (board[i + 1][j] != shipSquare) {
-        board[i + 1][j] = nearShipSquare;
-    }
-}
-
-const rightdown = function (i, j) {
-    i++;
-    j++;
-    if (board[i + 1][j + 1] != shipSquare) {
-        board[i + 1][j + 1] = nearShipSquare;
-    }
-}
-
-const right = function (i, j) {
-    i++;
-    j++;
-    if (board[i][j + 1] != shipSquare) {
-        board[i][j + 1] = nearShipSquare;
-    }
-}
-
-const rightup = function (i, j) {
-    i++;
-    j++;
-    if (board[i - 1][j + 1] != shipSquare) {
-        board[i - 1][j + 1] = nearShipSquare;
-    }
-}
-
-const createAndShowNear = function () {
-    for (let i = 0; i < 10; i++) {
-        for (let j = 0; j < 10; j++) {
-            if (board[i + 1][j + 1] == shipSquare) {
-                if (i == 0) {
-                    if (j == 0) {
-                        down(i, j);
-                        right(i, j);
-                        rightdown(i, j);
-                    }
-                    else if (j == 9) {
-                        down(i, j);
-                        left(i, j);
-                        leftdown(i, j);
-                    }
-                    else {
-                        left(i, j);
-                        leftdown(i, j);
-                        down(i, j);
-                        rightdown(i, j);
-                        right(i, j);
-                    } //end else
-                } //end if i == 0
-                else if (i == 9) {
-                    right(i, j);
-                    rightup(i, j);
-                    up(i, j);
-                    leftup(i, j);
-                    left(i, j);
-                } //end if i == 9
-                else if (j == 0) {
-                    down(i, j);
-                    rightdown(i, j);
-                    right(i, j);
-                    rightup(i, j);
-                    up(i, j);
-                } //end if j == 0      
-                else if (j == 9) {
-                    up(i, j);
-                    leftup(i, j);
-                    left(i, j);
-                    leftdown(i, j);
-                    down(i, j);
-                } //end if j == 9
-                else {
-                    left(i, j);
-                    leftdown(i, j);
-                    down(i, j);
-                    rightdown(i, j);
-                    right(i, j);
-                    rightup(i, j);
-                    up(i, j);
-                    leftup(i, j);
-
-                } //end else        
-            }
-        }
-    }
 }
 
 function currentHitSumAll(shipsToFind, currentSumShip, winningSumShip) {
@@ -606,57 +421,62 @@ let turn = "player";
 
 function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
 
-    
-        const row = I;
-        const col = J;
 
-        squares[row][col].className = "hit";
-        board[row + 1][col + 1] = hitSquare;
+    const row = I;
+    const col = J;
 
-        for (let i = 0; i < shipsToFind.length; i++) {
-            for (let j = 0; j < shipsToFind[i].length; j++) {
-                for (let k = 0; k < shipsToFind[i][j].length; k++) {
-                    if (shipsToFind[i][j][k][0] == row && shipsToFind[i][j][k][1] == col) {
-                        shipsToFind[i][1][k] = 1;
-                        currentSumShip[i] = currentSumShip[i] + 1; //add hit square
+    squares[row][col].className = "hit";
+    board[row + 1][col + 1] = hitSquare;
 
-                        if (currentHitSumShip(shipsToFind, i) == shipsToFind[i][j].length) {
-                            sunkShip(shipsToFind, squares, i);
-                            leftShips[i].className += " ship-left-sunked";
-                            //console.log("TTTTTTT after hit", texts)
+    for (let i = 0; i < shipsToFind.length; i++) {
+        for (let j = 0; j < shipsToFind[i].length; j++) {
+            for (let k = 0; k < shipsToFind[i][j].length; k++) {
+                if (shipsToFind[i][j][k][0] == row && shipsToFind[i][j][k][1] == col) {
+                    shipsToFind[i][1][k] = 1;
+                    currentSumShip[i] = currentSumShip[i] + 1; //add hit square
 
-                        }
-                        if (currentHitSumAll(shipsToFind, currentSumShip, winningSumShip)) {
-                            winMessage(player);
-                        }
+                    if (currentHitSumShip(shipsToFind, i) == shipsToFind[i][j].length) {
+                        sunkShip(shipsToFind, squares, i);
+                        leftShips[i].className += " ship-left-sunked";
+
+                    }
+                    if (currentHitSumAll(shipsToFind, currentSumShip, winningSumShip)) {
+                        winMessage(player);
                     }
                 }
             }
         }
+    }
 
 }
 function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
+    console.log("sq", squares[I][J].className   );  
+    if(squares[I][J].className == "ship")
+{
     if (turn == "player") {
         console.log("pl", turn);
-     hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) 
-     turn = "oponent";} else {
+        hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)
+        turn = "oponent";
+    } else {
         alert("its not your turn");
     }
+}
 }
 const missShip = function (board, squares, i, j) {
-    
-        squares[i][j].className = "miss";
-        board[i + 1][j + 1] = missedSquare;
-    
+
+    squares[i][j].className = "miss";
+    board[i + 1][j + 1] = missedSquare;
 
 }
-const miss= function (board, squares, i, j) {
-    if (turn == "player") {
+const miss = function (board, squares, i, j) {
+       if(squares[i][j].className == "default")
+{ if (turn == "player") {
         console.log("pl", turn);
-    missShip(board, squares, i, j);turn = "oponent";}else {
+        missShip(board, squares, i, j); turn = "oponent";
+    } else {
         alert("its not your turn");
     }
-}
+}}
 
 const playGuess = function (player, board, shipsToFind, squares, leftShips, texts) {
 
@@ -666,11 +486,11 @@ const playGuess = function (player, board, shipsToFind, squares, leftShips, text
         for (let j = 0; j < 10; j++) {
 
             if (board[i + 1][j + 1] == shipSquare) {
-                squares[i][j].addEventListener("click", function () { hit(player, board, shipsToFind, leftShips, squares, i, j, currentSumShip, winningSumShip); }, { once: true });
+                squares[i][j].addEventListener("click", function () { hit(player, board, shipsToFind, leftShips, squares, i, j, currentSumShip, winningSumShip); });
 
             }
             else if (board[i + 1][j + 1] == defaultSquare || board[i + 1][j + 1] == nearShipSquare) {
-                squares[i][j].addEventListener("click", function () { miss(board, squares, i, j); }, { once: true });
+                squares[i][j].addEventListener("click", function () { miss(board, squares, i, j); } );
 
             }
         }
@@ -678,8 +498,6 @@ const playGuess = function (player, board, shipsToFind, squares, leftShips, text
 
 
 }
-
-
 
 
 let board;
@@ -691,23 +509,21 @@ let shipsToFindO;
 let squaresO;
 let leftShips = getLeftShips();
 let leftShipsOponent = getLeftShipsOponent();
-console.log(leftShipsOponent)
 
 let squares;
 
 let randomOrPlaceYourShips = 0;
 let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
-let board2;
 
 
-function randomSquareShoot(player, board, board2, shoot) {
+function randomSquareShoot(player, board, shoot) {
 
 
     //let around=[{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: 0, y: -1 }];
     let randomSquare;
     let squareShooted = 0;
-    while (squareShooted == 0 && shoot <= 100 && turn=="oponent") {
+    while (squareShooted == 0 && shoot <= 100 && turn == "oponent") {
         const randomRow = Math.round(Math.random() * 100) % 10 + 1;
         const randomCol = Math.round(Math.random() * 100) % 10 + 1;
         randomSquare = { x: randomRow, y: randomCol };
@@ -717,14 +533,8 @@ function randomSquareShoot(player, board, board2, shoot) {
                 squareShooted = 1;
                 board[randomRow][randomCol] = 1;
                 missShip(board, squares, randomRow - 1, randomCol - 1);
-                // let max=0;
-                // for(item in around){
-                //     if(board2[item.x+randomRow][item.y+randomCol]>0){
-                //         max=board2[item.x+randomRow][item.y+randomCol]+1;
-
-                //     }
-               turn="player"; 
-            } 
+                turn = "player";
+            }
 
         } else if (board[randomRow][randomCol] == 5) {
             if (turn == "oponent") {
@@ -732,8 +542,8 @@ function randomSquareShoot(player, board, board2, shoot) {
                 squareShooted = 1;
                 board[randomRow][randomCol] = 6;//hit
                 hitShip(player, board, shipsToFind, leftShips, squares, randomRow - 1, randomCol - 1, currentSumShip, winningSumShip);
-                turn="player"; 
-            } 
+                turn = "player";
+            }
 
         } else {
 
@@ -756,14 +566,12 @@ function shootOnClick() {
 
 
     shoot++;
-    const randomSquare = randomSquareShoot("oponent", board, board2, shoot);
-    console.log(randomSquare);
-if(!randomSquare){
-    shoot--;
-    console.log(shoot);
-    alert("its your turn");
+    const randomSquare = randomSquareShoot("oponent", board, shoot);
+    if (!randomSquare) {
+        shoot--;
+        alert("its your turn");
 
-}
+    }
     if (shoot == 100) {
         document.querySelector("#shoot-btn").className = "disappeared";
 
@@ -774,15 +582,12 @@ if(!randomSquare){
 
 
 function randomShipsOnClick() {
-    //console.log("random");
     winMessageClear();
     board = createEmptyBoardAndBorders();
-    board2 = createEmptyBoardAndBorders();
 
     shipsToFind = createRandomShips(board);
     //createAndShowNear();
     //printBoard(board);
-    printBoard(board2);
 
     drawTable(board, "player");
     randomOrPlaceYourShips = 1;
