@@ -1,3 +1,7 @@
+*{
+    margin:0;
+}
+
 .ship-left {
     height: 30px;
     /* background-color: gray; */
@@ -54,7 +58,9 @@
 
 #container {
     display: grid;
-    grid-template-columns: 50px;
+    grid-template-columns: 0.8fr 1.5fr 1.5fr 0.8fr;
+    grid-column-gap: 80px;
+
     grid-template-rows: auto;
     grid-template-areas: 
     "header header header header"
@@ -64,7 +70,6 @@
 
 #table-player {
     grid-area: player;
-    margin-left: 100px;
 
 }
 
@@ -77,9 +82,9 @@
     /* background-color:rgb(255, 196, 190); */
 margin: 40px;
 border-radius: 1%;
-margin-right: 100px;
-/* border: black 1px solid; */
+border: black 1px solid;
 
+width:150px;
 
 
 }
@@ -88,7 +93,8 @@ margin-right: 100px;
     /* background-color:rgb(255, 196, 190); */
 margin: 40px;
 border-radius: 1%;
-/* border: black 1px solid; */
+border: black 1px solid;
+width:150px;
 
 
 

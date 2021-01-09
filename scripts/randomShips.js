@@ -450,17 +450,16 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 
 }
 function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
-    console.log("sq", squares[I][J].className   );  
-    if(squares[I][J].className == "ship")
-{
-    if (turn == "player") {
-        console.log("pl", turn);
-        hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)
-        turn = "oponent";
-    } else {
-        alert("its not your turn");
+    console.log("sq", squares[I][J].className);
+    if (squares[I][J].className == "ship") {
+        if (turn == "player") {
+            console.log("pl", turn);
+            hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)
+            turn = "oponent";
+        } else {
+            alert("its not your turn");
+        }
     }
-}
 }
 const missShip = function (board, squares, i, j) {
 
@@ -469,14 +468,15 @@ const missShip = function (board, squares, i, j) {
 
 }
 const miss = function (board, squares, i, j) {
-       if(squares[i][j].className == "default")
-{ if (turn == "player") {
-        console.log("pl", turn);
-        missShip(board, squares, i, j); turn = "oponent";
-    } else {
-        alert("its not your turn");
+    if (squares[i][j].className == "default") {
+        if (turn == "player") {
+            console.log("pl", turn);
+            missShip(board, squares, i, j); turn = "oponent";
+        } else {
+            alert("its not your turn");
+        }
     }
-}}
+}
 
 const playGuess = function (player, board, shipsToFind, squares, leftShips, texts) {
 
@@ -490,7 +490,7 @@ const playGuess = function (player, board, shipsToFind, squares, leftShips, text
 
             }
             else if (board[i + 1][j + 1] == defaultSquare || board[i + 1][j + 1] == nearShipSquare) {
-                squares[i][j].addEventListener("click", function () { miss(board, squares, i, j); } );
+                squares[i][j].addEventListener("click", function () { miss(board, squares, i, j); });
 
             }
         }
@@ -516,11 +516,16 @@ let randomOrPlaceYourShips = 0;
 let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 
+function aroundShoot(player, board, shoot) {
+    let randomDirection = Math.round(Math.random() * 10) % 4;
 
+    let around=[{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: 0, y: -1 }];
+
+
+}
 function randomSquareShoot(player, board, shoot) {
 
 
-    //let around=[{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: 0, y: -1 }];
     let randomSquare;
     let squareShooted = 0;
     while (squareShooted == 0 && shoot <= 100 && turn == "oponent") {
@@ -556,7 +561,7 @@ function randomSquareShoot(player, board, shoot) {
 
     board[0][0] = shoot;
 
-    printBoard(board);
+    //printBoard(board);
     return randomSquare;
 
 }
@@ -584,7 +589,7 @@ function shootOnClick() {
 function randomShipsOnClick() {
     winMessageClear();
     board = createEmptyBoardAndBorders();
-
+    turn = "player"
     shipsToFind = createRandomShips(board);
     //createAndShowNear();
     //printBoard(board);
