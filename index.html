@@ -2,158 +2,127 @@
 
 <html>
 
-<head>
-    <title>Battleship</title>
-    <link rel="stylesheet" href="styles/site.css">
-    <link rel="stylesheet" href="styles/td.css">
-    <link rel="stylesheet" href="styles/text.css">
-    <link rel="stylesheet" href="styles/buttons.css">
-    <link rel="stylesheet" href="styles/shipsLeft.css">
-</head>
+    <head>
+        <title>Battleship</title>
+        <link rel="stylesheet" href="styles/site.css">
+        <link rel="stylesheet" href="styles/td.css">
+        <link rel="stylesheet" href="styles/text.css">
+        <link rel="stylesheet" href="styles/buttons.css">
+        <link rel="stylesheet" href="styles/shipsLeft.css">
+    </head>
 
-<body>
+    <body>
 
-    <nav>
+        <h1 id="battleship">
+            Battleship
+        </h1>
 
-    </nav>
-    <h1 id="battleship">
-        Battleship
-    </h1>  
-    <!-- <div id="left-ships-container" class="disappeared">
-            <ul>
-          
-          
-              <li class="default-text">SHIP 4</li>
-          
-              <li class="default-text">SHIP 3</li>
-              <li class="default-text">SHIP 3</li>
-          
-                <li class="default-text">SHIP 2</li>
-                <li class="default-text">SHIP 2</li>
-                <li class="default-text">SHIP 2</li>
-          
-                <li class="default-text">SHIP 1</li>
-                <li class="default-text">SHIP 1</li>
-                <li class="default-text">SHIP 1</li>
-                <li class="default-text">SHIP 1</li>
-               
-          
-                
-           </ul>
+        <button id="random-btn" onclick="randomShipsOnClick()">Random</button>
+        <button id="reset-btn" onclick="resetShipsOnClick()">Reset</button>
+        <button id="play-btn" onclick="playOnClick()">Play</button>
+        <button id="quit-btn" class="disappeared" onclick="quitOnClick()">Quit</button>
+        <button id="shoot-btn" class="disappeared" onclick="shootOnClick()">Shoot</button>
+
+        <div id="container">
+
+            <div class="ships-left">
+
+                <div id="s4" class="ship-left ship4-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+                <div id="s3a" class="ship-left ship3-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+                <div id="s3b" class="ship-left ship3-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+
+                <div id="s2a" class="ship-left ship2-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+                <div id="s2b" class="ship-left ship2-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+                <div id="s2c" class="ship-left ship2-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+
+                <div class="ship-left ship1-left" id="s1a">
+                    <div class="ship-left-square"></div>
+                </div>
+                <div class="ship-left ship1-left" id="s1b">
+                    <div class="ship-left-square"></div>
+                </div>
+                <div class="ship-left ship1-left" id="s1c">
+                    <div class="ship-left-square"></div>
+                </div>
+                <div class="ship-left ship1-left" id="s1d">
+                    <div class="ship-left-square"></div>
+                </div>
+            </div>
+
+            <div class="ships-left-oponent disappeared">
+
+                <div id="so4" class="ship-left ship4-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+
+                <div id="so3a" class="ship-left ship3-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+                <div id="so3b" class="ship-left ship3-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+
+                <div id="so2a" class="ship-left ship2-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+                <div id="so2b" class="ship-left ship2-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+                <div id="so2c" class="ship-left ship2-left">
+                    <div class="ship-left-square"></div>
+                    <div class="ship-left-square"></div>
+                </div>
+
+                <div class="ship-left ship1-left" id="so1a">
+                    <div class="ship-left-square"></div>
+                </div>
+                <div class="ship-left ship1-left" id="so1b">
+                    <div class="ship-left-square"></div>
+                </div>
+                <div class="ship-left ship1-left" id="so1c">
+                    <div class="ship-left-square"></div>
+                </div>
+                <div class="ship-left ship1-left" id="so1d">
+                    <div class="ship-left-square"></div>
+                </div>
+
+            </div>
             
-          </div> -->
-          
-          
-              <button id="random-btn" onclick="randomShipsOnClick()">Random</button>
-              <button id="reset-btn" onclick="resetShipsOnClick()">Reset</button>
-              <button id="play-btn" onclick="playOnClick()">Play</button>
-              <button id="quit-btn" class="disappeared" onclick="quitOnClick()">Quit</button>
-              <button id="shoot-btn" class="disappeared" onclick="shootOnClick()">Shoot</button>
-              <!-- <table>
-                      
-              </table> -->
-    <div id="container">
-
-      
-       
-        <div class="ships-left">
-
-            <div id="s4" class="ship-left ship4-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-
-
-            </div>
-            <div id="s3a" class="ship-left ship3-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-            <div id="s3b" class="ship-left ship3-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-
-            <div id="s2a" class="ship-left ship2-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-            <div id="s2b" class="ship-left ship2-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-            <div id="s2c" class="ship-left ship2-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-
-            <div class="ship-left ship1-left" id="s1a">
-                <div class="ship-left-square"></div>
-            </div>
-            <div class="ship-left ship1-left" id="s1b">
-                <div class="ship-left-square"></div>
-            </div>
-            <div class="ship-left ship1-left" id="s1c">
-                <div class="ship-left-square"></div>
-            </div>
-            <div class="ship-left ship1-left" id="s1d">
-                <div class="ship-left-square"></div>
-            </div>
         </div>
-        <div class="ships-left-oponent disappeared">
 
-            <div id="so4" class="ship-left ship4-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
+        <script src="scripts/randomShips.js"></script>
 
-
-            </div>
-            <div id="so3a" class="ship-left ship3-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-            <div id="so3b" class="ship-left ship3-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-
-            <div id="so2a" class="ship-left ship2-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-            <div id="so2b" class="ship-left ship2-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-            <div id="so2c" class="ship-left ship2-left">
-                <div class="ship-left-square"></div>
-                <div class="ship-left-square"></div>
-            </div>
-
-            <div class="ship-left ship1-left" id="so1a">
-                <div class="ship-left-square"></div>
-            </div>
-            <div class="ship-left ship1-left" id="so1b">
-                <div class="ship-left-square"></div>
-            </div>
-            <div class="ship-left ship1-left" id="so1c">
-                <div class="ship-left-square"></div>
-            </div>
-            <div class="ship-left ship1-left" id="so1d">
-                <div class="ship-left-square"></div>
-            </div>
-        </div>
-    </div>
-
-    <script src="scripts/randomShips.js"></script>
-
-</body>
+    </body>
 
 </html>
