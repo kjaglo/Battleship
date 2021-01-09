@@ -14,7 +14,8 @@ html {
 h1 {
     margin: 20px;
     text-align: center;
-    color: rgb(177, 96, 87);
+    /* color: rgb(206, 122, 112); */
+    color:rgb(182, 13, 55);
     font-size: 50px;
 }
 section.ships {
@@ -33,7 +34,6 @@ table {
 th {
     border: black 2px solid;
     border-radius: 10%;
-
     padding: 4px;
     background-color: white;
     width: 22px;

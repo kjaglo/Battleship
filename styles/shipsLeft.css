@@ -14,6 +14,7 @@
 .ship-left-square {
     height: 30px;
     background-color: cadetblue;
+    /* background-color: rgb(248, 160, 150); */
     margin:1px;
     border-radius: 10%;
     width: 30px;
@@ -43,7 +44,7 @@
 }
 
 .ship-left-sunked >.ship-left-square {
-    background:rgb(238, 8, 8);
+    background:rgb(208, 224, 224);
 }
 
 
@@ -70,11 +71,13 @@
 
 #table-player {
     grid-area: player;
+    justify-self: center;
 
 }
 
 #table-oponent {
     grid-area: oponent;
+    justify-self: center;
 
 }
 .ships-left {
@@ -83,6 +86,7 @@
 margin: 40px;
 border-radius: 1%;
 border: black 1px solid;
+justify-self: center;
 
 width:150px;
 
@@ -95,6 +99,7 @@ margin: 40px;
 border-radius: 1%;
 border: black 1px solid;
 width:150px;
+justify-self: center;
 
 
 

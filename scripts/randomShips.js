@@ -616,21 +616,27 @@ function resetShipsOnClick() {
 
 }
 
+
 function buttonsChanges(play) {
     if (play == true) {
         document.querySelector("#random-btn").className = "";
         document.querySelector("#reset-btn").className = "";
         document.querySelector("#play-btn").className = "";
-        //document.querySelector("#left-ships-container").className = "disappeared";
+
+        document.querySelector(".ships-left-oponent").className = "ships-left-oponent disappeared";
+        document.querySelector("#shoot-btn").className = "disappeared";
 
         document.querySelector("#quit-btn").className = "disappeared";
     } else {
         document.querySelector("#random-btn").className = "disappeared";
         document.querySelector("#reset-btn").className = "disappeared";
         document.querySelector("#play-btn").className = "disappeared";
-        //document.querySelector("#left-ships-container").className = "";
+
+        document.querySelector(".ships-left-oponent").className = "ships-left-oponent";
 
         document.querySelector("#quit-btn").className = "";
+        document.querySelector("#shoot-btn").className = "";
+
     }
 
 
@@ -676,7 +682,3 @@ function quitOnClick() {
     }
 }
 
-
-function checkIfshooted() {
-
-}
