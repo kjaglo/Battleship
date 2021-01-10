@@ -231,10 +231,10 @@ function getLeftShips(shipsTypeClass) {
     console.log(shipsType)
     const leftShips = [];
     let ids;
-    if(shipsTypeClass == ".left-ships") {
-        ids = ["#s4", "#s3a", "#s3b", "#s2a", "#s2b", "#s2c", "#s1a", "#s1b", "#s1c", "s1d"];
+    if(shipsTypeClass == ".ships-left") {
+        ids = ["#s4", "#s3a", "#s3b", "#s2a", "#s2b", "#s2c", "#s1a", "#s1b", "#s1c", "#s1d"];
     } else {
-        ids = ["#so4", "#so3a", "#so3b", "#so2a", "#so2b", "#so2c", "#so1a", "#so1b", "#so1c", "so1d"];
+        ids = ["#so4", "#so3a", "#so3b", "#so2a", "#so2b", "#so2c", "#so1a", "#so1b", "#so1c", "#so1d"];
     }
     for(i in ids){
         leftShips.push(shipsType.querySelector(ids[i]))
