@@ -507,7 +507,7 @@ function aroundShoot(row, col) {
         const cornerY = corners[i].y + col;
         let isInArray = false;
         for (k in squaresAround) {
-            if (squaresAround[k][0] == x && squaresAround[k][0] == y) {
+            if (squaresAround[k][0] == x && squaresAround[k][1] == y) {
                 isInArray = true;
             }
         }
@@ -622,7 +622,7 @@ function shootOnClick() {
         }
         turn = "player";
         printBoard(board);
-    }, 1000);//wait 1 sec    
+    }, 000);//wait 1 sec    
     
 
 }
