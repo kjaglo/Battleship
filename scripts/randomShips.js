@@ -266,7 +266,19 @@ function showShips(board, td, i, j) {
 function dontShowShips(td) {
     td.className = "default";
 }
-
+function allowDrop(ev) {
+    ev.preventDefault();
+  }
+  
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+  
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+  }
 function drawTable(board, player) {
 
     const container = document.getElementById('container');
@@ -313,6 +325,10 @@ function drawTable(board, player) {
                 //td.appendChild(document.createTextNode("i"+(i-1)+" j"+j)); 
                 showShips(board, td, i, j);
                 //dontShowShips(td);
+                //ondrop="drop(event)" ondragover="allowDrop(event)"
+                td.setAttribute("ondrop", "drop(event)");
+                td.setAttribute("ondragover", "allowDrop(event)");
+
                 tr.appendChild(td);
             }
         }
@@ -373,7 +389,7 @@ function sunkShip(shipsToFind, squares, i, r, c) {
 
         squares[row][col].className = "hit-and-sunk"
         console.log("i", i)
-        disableAround(i, r, c);
+        //disableAround(i, r, c);
     }
 }
 
@@ -530,10 +546,12 @@ function randomSquareShoot(player, board, shoot) {
             console.log(squaresAround[i][0], squaresAround[i][1])
             const r = squaresAround[i][0];
             const c = squaresAround[i][1];
+            console.log("rc", r,c);
+
             if (board[r][c] === shipSquare) {
                 if (turn === "oponent") {
                     console.log("opo", turn);
-                    quareShooted = 1;
+                    squareShooted = 1;
                     board[r][c] = 2;//hit
                     aroundShoot(r, c)
                     hitShip(player, board, shipsToFind, leftShips, squares, r - 1, c - 1, currentSumShip, winningSumShip);
@@ -566,7 +584,7 @@ function randomSquareShoot(player, board, shoot) {
                 if (turn === "oponent") {
                     console.log("opo", turn);
                     squareShooted = 1;
-                    board[randomRow][randomCol] = 1;
+                    //board[randomRow][randomCol] = 1;
                     missShip(board, squares, randomRow - 1, randomCol - 1);
                     turn = "player";
                 }
@@ -575,7 +593,7 @@ function randomSquareShoot(player, board, shoot) {
                     aroundShoot(randomRow, randomCol)
                     console.log("opo", turn);
                     squareShooted = 1;
-                    board[randomRow][randomCol] = 2;//hit
+                    //board[randomRow][randomCol] = 2;//hit
                     hitShip(player, board, shipsToFind, leftShips, squares, randomRow - 1, randomCol - 1, currentSumShip, winningSumShip);
                     turn = "player";
                 }
@@ -585,7 +603,8 @@ function randomSquareShoot(player, board, shoot) {
         }
     }
     board[0][0] = shoot;
-    printBoard(board);
+    //printBoard(board);
+    console.log(randomSquare)
     return randomSquare;
 }
 
@@ -601,8 +620,11 @@ function shootOnClick() {
         if (shoot === 100) {
             document.querySelector("#shoot-btn").className = "disappeared";
         }
-        turn = "player"
-    }, 10);//wait 1 sec
+        turn = "player";
+        printBoard(board);
+    }, 1000);//wait 1 sec    
+    
+
 }
 
 function randomShipsOnClick() {

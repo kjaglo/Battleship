@@ -12,30 +12,40 @@
 }
 
 .ship-left-square {
-    height: 30px;
+    height: 35px;
     background-color: cadetblue;
     /* background-color: rgb(248, 160, 150); */
     margin:1px;
     border-radius: 10%;
-    width: 30px;
+    width: 35px;
+    height: 35px;
+
 
 }
 .ship1-left {
-    width: 30px;
+    width: 35px;
+    height: 35px;
+
 }
 
 .ship2-left {
-    width: 60px;
+    width: 70px;
+    height: 35px;
+
     
 }
 
 .ship3-left {
-    width: 90px;
+    width: 105px;
+    height: 35px;
+
     
 }
 
 .ship4-left {
-    width: 120px;
+    width: 140px;
+    height: 35px;
+
 }
 
 .ship-left:hover >.ship-left-square {
@@ -83,12 +93,12 @@
 .ships-left {
     grid-area: ships-left;
     /* background-color:rgb(255, 196, 190); */
-margin: 40px;
+margin: 30px;
 border-radius: 1%;
 border: black 1px solid;
 justify-self: center;
 
-width:150px;
+width:160px;
 
 
 }
