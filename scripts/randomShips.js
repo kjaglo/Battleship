@@ -268,17 +268,17 @@ function dontShowShips(td) {
 }
 function allowDrop(ev) {
     ev.preventDefault();
-  }
-  
-  function drag(ev) {
+}
+
+function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
-  }
-  
-  function drop(ev) {
+}
+
+function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
-  }
+}
 function drawTable(board, player) {
 
     const container = document.getElementById('container');
@@ -360,18 +360,28 @@ function disableAround(i, row, col) {
     if (i > 5) {
         dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
         for (it of dxdy) {
-        console.log("xy",row + it.x, col + it.y)
-        board[row + it.x][col + it.y] = 1;
-    }
-    } else if(i>2) {
-       // dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
-       if(board[row][col+1]==2){
-        console.log("h")
-       } else {
+            console.log("xy", row + it.x, col + it.y)
+            board[row + it.x][col + it.y] = 1;
+        }
+    } else {
+        // dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
+        let direction;
+        board[row][col + 1] === 2 || board[row][col - 1] === 2 ? direction = "horizontal" : direction = "vertical";
+        
+        if(i>2){
+        if (direction === "vertical") {
 
-        console.log("v")
+            if (board[row - 1][col] === 2) { board[row + 1][col] == 1; }
+            else { board[row - 1][col] == 1 }
+        } else {
 
-       }
+            if (board[row][col - 1] === 2) { board[row][col + 1] == 1; }
+            else { board[row][col - 1] == 1 }
+        }
+ }
+        console.log(direction);
+   
+
     }
     // else if (i < 1) {
     //      dxdy = [{ x: 0, y: 0 }, { x: -1, y: 1 }];
@@ -379,17 +389,19 @@ function disableAround(i, row, col) {
     //          console.log("h")
     //      }
     // }
-    
+
 }
-function sunkShip(shipsToFind, squares, i, r, c) {
+function sunkShip(player, shipsToFind, squares, i, r, c) {
     for (let k = 0; k < shipsToFind[i][0].length; k++) {
 
         const row = shipsToFind[i][0][k][0];
         const col = shipsToFind[i][0][k][1];
 
         squares[row][col].className = "hit-and-sunk"
-        console.log("i", i)
-        //disableAround(i, r, c);
+        console.log("i", i);
+
+    } if (player === "oponent") {
+        disableAround(i, r, c);
     }
 }
 
@@ -428,7 +440,7 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
                     currentSumShip[i] = currentSumShip[i] + 1; //add hit square
 
                     if (currentHitSumShip(shipsToFind, i) === shipsToFind[i][j].length) {
-                        sunkShip(shipsToFind, squares, i, row+1, col+1);
+                        sunkShip(player, shipsToFind, squares, i, row + 1, col + 1);
                         console.log(i, leftShips[i])
                         leftShips[i].className += " ship-left-sunked";
                         if (player === "oponent") {
@@ -546,7 +558,7 @@ function randomSquareShoot(player, board, shoot) {
             console.log(squaresAround[i][0], squaresAround[i][1])
             const r = squaresAround[i][0];
             const c = squaresAround[i][1];
-            console.log("rc", r,c);
+            console.log("rc", r, c);
 
             if (board[r][c] === shipSquare) {
                 if (turn === "oponent") {
@@ -623,7 +635,7 @@ function shootOnClick() {
         turn = "player";
         printBoard(board);
     }, 000);//wait 1 sec    
-    
+
 
 }
 
