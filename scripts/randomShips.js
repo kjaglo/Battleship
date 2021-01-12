@@ -367,20 +367,55 @@ function disableAround(i, row, col) {
         // dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
         let direction;
         board[row][col + 1] === 2 || board[row][col - 1] === 2 ? direction = "horizontal" : direction = "vertical";
-        
-        if(i>2){
-        if (direction === "vertical") {
 
-            if (board[row - 1][col] === 2) { board[row + 1][col] == 1; }
-            else { board[row - 1][col] == 1 }
-        } else {
+        if (i > 2) {
+            if (direction === "vertical") {
 
-            if (board[row][col - 1] === 2) { board[row][col + 1] == 1; }
-            else { board[row][col - 1] == 1 }
+                if (board[row - 1][col] === 2) {
+                    if (board[row + 1][col] != 9) {
+                        board[row + 1][col] = 1;
+                    }
+                    if (board[row - 1][col] != 9) {
+                        if (board[row - 2][col] != 9) {
+                            board[row - 2][col] = 1;
+                        }
+                    }
+                }
+                else {
+                    if (board[row + 1][col] != 9) {
+                        if (board[row + 2][col] != 9) {
+                            board[row + 2][col] = 1;
+                        }
+                    }
+                    if (board[row - 1][col] != 9)
+                        board[row - 1][col] = 1;
+                }
+            } else {
+
+                if (board[row][col - 1] === 2) {
+                    if (board[row][col - 1] != 9) {
+                        if (board[row][col - 2] != 9) {
+                            board[row][col - 2] = 1;
+                        }
+                    }
+                    if (board[row][col + 1] != 9) {
+                        board[row][col + 1] = 1;
+                    }
+                }
+                else {
+                    if (board[row][col - 1] != 9) {
+                        board[row][col - 1] = 1
+                    }
+                    if (board[row][col + 1] != 9) {
+                        if (board[row][col + 2] != 9) {
+                            board[row][col + 2] = 1
+                        }
+                    }
+                }
+            }
         }
- }
         console.log(direction);
-   
+
 
     }
     // else if (i < 1) {
