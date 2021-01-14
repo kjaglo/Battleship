@@ -15,7 +15,7 @@ let board = createEmptyBoardAndBorders();
 let shipsToFind;
 let squares;
 drawTable(board, "player");
-let leftShips = getLeftShips(".ships-left");
+let leftShips;
 
 let boardOponent;
 let shipsToFindO;
@@ -266,6 +266,7 @@ function showShips(board, td, i, j) {
 function dontShowShips(td) {
     td.className = "default";
 }
+
 function allowDrop(ev) {
     ev.preventDefault();
 }
@@ -279,6 +280,7 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
 }
+
 function drawTable(board, player) {
 
     const container = document.getElementById('container');
@@ -354,6 +356,7 @@ function currentHitSumShip(shipsToFind, i) {
     }
     return sum;
 }
+
 function disableAround(i, row, col) {
     let dxdy;
     if (i > 5) { // 1 square ships
@@ -401,6 +404,7 @@ function disableAround(i, row, col) {
         console.log(direction);
     }
 }
+
 function sunkShip(player, shipsToFind, squares, i, r, c) {
     for (let k = 0; k < shipsToFind[i][0].length; k++) {
 
@@ -429,7 +433,6 @@ function winMessage(player) {
         div.innerHTML = "<h1 id='won'>YOU WON!!!</h1>";
     } else {
         div.innerHTML = "<h1 id='won'>YOU LOSE!!!</h1>";
-
     }
     body.appendChild(div);
 }
@@ -507,18 +510,16 @@ function playGuess(player, board, shipsToFind, squares, leftShips, texts) {
 
             if (board[i + 1][j + 1] === shipSquare) {
                 squares[i][j].addEventListener("click", function () { hit(player, board, shipsToFind, leftShips, squares, i, j, currentSumShip, winningSumShip); });
-
             }
             else if (board[i + 1][j + 1] === defaultSquare || board[i + 1][j + 1] === nearShipSquare) {
                 squares[i][j].addEventListener("click", function () { miss(board, squares, i, j); });
-
             }
         }
     }
 }
 
 function aroundShoot(row, col) {
-    //let randomDirection = Math.round(Math.random() * 10) % 4;
+
     let around = [{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: 0, y: -1 }];
     let corners = [{ x: -1, y: -1 }, { x: 1, y: 1 }, { x: 1, y: -1 }, { x: -1, y: 1 }];
 
@@ -536,11 +537,10 @@ function aroundShoot(row, col) {
         if (!isInArray) {
             if (x != 0 && x != 11 && y != 0 && y != 11) {
                 const square = [x, y]
-                //board[x][y]=7;
                 squaresAround.push(square);
             }
             if (cornerX != 0 && cornerX != 11 && cornerY != 0 && cornerY != 11) {
-                board[cornerX][cornerY] = 1;//miss
+                board[cornerX][cornerY] = missedSquare;
 
             }
         }
@@ -554,13 +554,6 @@ function randomSquareShoot(player, board, shoot) {
 
     for (i in squaresAround) {
         console.log("s", squaresAround[i][0], squaresAround[i][1]);
-
-    }
-    for (i in board[0]) {
-        for (j in board[0]) {
-            //if(board[i][j]==7){
-
-        }
     }
 
     if (squaresAround.length > 0) {
@@ -574,27 +567,25 @@ function randomSquareShoot(player, board, shoot) {
                 if (turn === "oponent") {
                     console.log("opo", turn);
                     squareShooted = 1;
-                    board[r][c] = 2;//hit
+                    board[r][c] = hitSquare;
                     aroundShoot(r, c)
                     hitShip(player, board, shipsToFind, leftShips, squares, r - 1, c - 1, currentSumShip, winningSumShip);
                     turn = "player";
                     return { x: r, y: c }
 
                 }
-            } else if (board[r][c] === 0) {
+            } else if (board[r][c] === defaultSquare) {
                 if (turn === "oponent") {
                     console.log("opo", turn);
                     squareShooted = 1;
-                    board[r][c] = 1;
+                    board[r][c] = missedSquare;
                     missShip(board, squares, r - 1, c - 1);
                     turn = "player";
-                    //aroundShoot(r, c)
                     return { x: r, y: c }
 
                 }
             }
 
-            // squaresAround = [];
         }
     } else {
 
@@ -606,7 +597,6 @@ function randomSquareShoot(player, board, shoot) {
                 if (turn === "oponent") {
                     console.log("opo", turn);
                     squareShooted = 1;
-                    //board[randomRow][randomCol] = 1;
                     missShip(board, squares, randomRow - 1, randomCol - 1);
                     turn = "player";
                 }
@@ -615,7 +605,6 @@ function randomSquareShoot(player, board, shoot) {
                     aroundShoot(randomRow, randomCol)
                     console.log("opo", turn);
                     squareShooted = 1;
-                    //board[randomRow][randomCol] = 2;//hit
                     hitShip(player, board, shipsToFind, leftShips, squares, randomRow - 1, randomCol - 1, currentSumShip, winningSumShip);
                     turn = "player";
                 }
@@ -674,7 +663,6 @@ function changeButtons(play) {
         document.querySelector("#play-btn").className = "";
 
         document.querySelector(".ships-left-oponent").className = "ships-left-oponent disappeared";
-        // document.querySelector("#shoot-btn").className = "disappeared";
         document.querySelector("#quit-btn").className = "disappeared";
     } else {
         document.querySelector("#random-btn").className = "disappeared";
@@ -683,7 +671,6 @@ function changeButtons(play) {
 
         document.querySelector(".ships-left-oponent").className = "ships-left-oponent";
         document.querySelector("#quit-btn").className = "";
-        // document.querySelector("#shoot-btn").className = "";
     }
 }
 
@@ -701,6 +688,7 @@ function playOnClick() {
         randomOrPlaceYourShips = 0;
         changeButtons(false);
         randomOponentShips();
+        leftShips = getLeftShips(".ships-left");
         leftShipsOponent = getLeftShips(".ships-left-oponent");
         playGuess("player", boardOponent, shipsToFindO, squaresO, leftShipsOponent);
     }
@@ -712,11 +700,11 @@ function playOnClick() {
 function quitOnClick() {
 
     const answer = confirm("Are you sure you want to end game?");
-    console.log(answer);
     if (answer) {
         changeButtons(true);
         resetShipsOnClick();
         document.getElementById("table-oponent").remove();
+
     }
 }
 
