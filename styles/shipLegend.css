@@ -19,33 +19,26 @@
     border-radius: 10%;
     width: 35px;
     height: 35px;
-
-
 }
+
 .ship1-left {
     width: 35px;
     height: 35px;
-
 }
 
 .ship2-left {
     width: 70px;
-    height: 35px;
-
-    
+    height: 35px;  
 }
 
 .ship3-left {
     width: 105px;
     height: 35px;
-
-    
 }
 
 .ship4-left {
     width: 140px;
     height: 35px;
-
 }
 
 /* .ship-left:hover >.ship-left-square {
@@ -71,7 +64,6 @@
     display: grid;
     grid-template-columns: 0.8fr 1.5fr 1.5fr 0.8fr;
     grid-column-gap: 80px;
-
     grid-template-rows: auto;
     grid-template-areas: 
     "header header header header"
@@ -82,35 +74,30 @@
 #table-player {
     grid-area: player;
     justify-self: center;
-
 }
 
 #table-oponent {
     grid-area: oponent;
     justify-self: center;
-
 }
-.ships-left {
+
+.ships-left, .ships-to-drag {
     grid-area: ships-left;
     /* background-color:rgb(255, 196, 190); */
-margin: 30px;
-border-radius: 1%;
-border: black 1px solid;
-justify-self: center;
-
-width:160px;
-
-
+    margin: 30px;
+    border-radius: 1%;
+    border: black 1px solid;
+    justify-self: center;
+    width:160px;
 }
+
 .ships-left-oponent {
     grid-area: ships-left-oponent;
     /* background-color:rgb(255, 196, 190); */
-margin: 40px;
-border-radius: 1%;
-border: black 1px solid;
-width:150px;
-justify-self: center;
-
-
-
+    margin: 30px;
+    border-radius: 1%;
+    border: black 1px solid;
+    width:160px;
+    justify-self: center;
 }
+

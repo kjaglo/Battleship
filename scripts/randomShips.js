@@ -640,14 +640,18 @@ function changeButtons(play) {
         document.querySelector("#reset-btn").className = "";
         document.querySelector("#play-btn").className = "";
 
-        document.querySelector(".ships-left-oponent").className = "ships-left-oponent disappeared";
+        document.querySelector(".ships-left").classList.add("disappeared");
+        document.querySelector(".ships-left-oponent").classList.add("disappeared");
+        document.querySelector(".ships-to-drag").classList.remove("disappeared");
         document.querySelector("#quit-btn").className = "disappeared";
     } else {
         document.querySelector("#random-btn").className = "disappeared";
         document.querySelector("#reset-btn").className = "disappeared";
         document.querySelector("#play-btn").className = "disappeared";
 
-        document.querySelector(".ships-left-oponent").className = "ships-left-oponent";
+        document.querySelector(".ships-to-drag").classList.add("disappeared");
+        document.querySelector(".ships-left-oponent").classList.remove("disappeared");
+        document.querySelector(".ships-left").classList.remove("disappeared");
         document.querySelector("#quit-btn").className = "";
     }
 }
