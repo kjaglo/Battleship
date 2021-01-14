@@ -355,76 +355,51 @@ function currentHitSumShip(shipsToFind, i) {
     return sum;
 }
 function disableAround(i, row, col) {
-    console.log("XY", row, col)
     let dxdy;
-    if (i > 5) {
+    if (i > 5) { // 1 square ships
         dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
         for (it of dxdy) {
-            console.log("xy", row + it.x, col + it.y)
-            board[row + it.x][col + it.y] = 1;
+            const r = row + it.x;
+            const c = col + it.y;
+            if (board[r][c] != border) { board[r][c] = missedSquare; }
         }
     } else {
-        // dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
         let direction;
+        let sizeOfShip;
+
         board[row][col + 1] === 2 || board[row][col - 1] === 2 ? direction = "horizontal" : direction = "vertical";
 
-        if (i > 2) {
-            if (direction === "vertical") {
+        if (i > 2) { // 2 square ships
+            sizeOfShip = 2;
+        } else if (i > 0) { // 3 square ships
+            sizeOfShip = 3;
+        } else { // 4 square ship
+            sizeOfShip = 4;
+        }
+        if (direction === "vertical") {
 
-                if (board[row - 1][col] === 2) {
-                    if (board[row + 1][col] != 9) {
-                        board[row + 1][col] = 1;
-                    }
-                    if (board[row - 1][col] != 9) {
-                        if (board[row - 2][col] != 9) {
-                            board[row - 2][col] = 1;
-                        }
-                    }
-                }
-                else {
-                    if (board[row + 1][col] != 9) {
-                        if (board[row + 2][col] != 9) {
-                            board[row + 2][col] = 1;
-                        }
-                    }
-                    if (board[row - 1][col] != 9)
-                        board[row - 1][col] = 1;
-                }
-            } else {
+            if (board[row - 1][col] === hitSquare) { // current is lower
+                if (board[row + 1][col] != border) { board[row + 1][col] = missedSquare; }
+                if (board[row - sizeOfShip][col] != border) { board[row - sizeOfShip][col] = missedSquare; }
+            }
+            else { //current is upper
+                if (board[row + sizeOfShip][col] != border) { board[row + sizeOfShip][col] = missedSquare; }
+                if (board[row - 1][col] != border) { board[row - 1][col] = missedSquare; }
+            }
+        } else { //dir = horizontal
 
-                if (board[row][col - 1] === 2) {
-                    if (board[row][col - 1] != 9) {
-                        if (board[row][col - 2] != 9) {
-                            board[row][col - 2] = 1;
-                        }
-                    }
-                    if (board[row][col + 1] != 9) {
-                        board[row][col + 1] = 1;
-                    }
-                }
-                else {
-                    if (board[row][col - 1] != 9) {
-                        board[row][col - 1] = 1
-                    }
-                    if (board[row][col + 1] != 9) {
-                        if (board[row][col + 2] != 9) {
-                            board[row][col + 2] = 1
-                        }
-                    }
-                }
+            if (board[row][col - 1] === hitSquare) { // current is right
+                if (board[row][col - sizeOfShip] != border) { board[row][col - sizeOfShip] = missedSquare; }
+                if (board[row][col + 1] != border) { board[row][col + 1] = missedSquare; }
+            }
+            else { //current is left
+                if (board[row][col - 1] != border) { board[row][col - 1] = missedSquare; }
+                if (board[row][col + sizeOfShip] != border) { board[row][col + sizeOfShip] = missedSquare; }
             }
         }
+
         console.log(direction);
-
-
     }
-    // else if (i < 1) {
-    //      dxdy = [{ x: 0, y: 0 }, { x: -1, y: 1 }];
-    //      if(board[row][col+1]==2){
-    //          console.log("h")
-    //      }
-    // }
-
 }
 function sunkShip(player, shipsToFind, squares, i, r, c) {
     for (let k = 0; k < shipsToFind[i][0].length; k++) {
