@@ -400,8 +400,6 @@ function disableAround(i, row, col) {
                 if (board[row][col + sizeOfShip] != border) { board[row][col + sizeOfShip] = missedSquare; }
             }
         }
-
-        console.log(direction);
     }
 }
 
@@ -412,7 +410,6 @@ function sunkShip(player, shipsToFind, squares, i, r, c) {
         const col = shipsToFind[i][0][k][1];
 
         squares[row][col].className = "hit-and-sunk"
-        console.log("i", i);
 
     } if (player === "oponent") {
         disableAround(i, r, c);
@@ -454,7 +451,6 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 
                     if (currentHitSumShip(shipsToFind, i) === shipsToFind[i][j].length) {
                         sunkShip(player, shipsToFind, squares, i, row + 1, col + 1);
-                        console.log(i, leftShips[i])
                         leftShips[i].className += " ship-left-sunked";
                         if (player === "oponent") {
                             squaresAround = [];
@@ -470,10 +466,8 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 }
 
 function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
-    console.log("sq", squares[I][J].className);
     if (squares[I][J].className === "ship") {
         if (turn === "player") {
-            console.log("pl", turn);
             hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)
             turn = "oponent";
             shootOnClick();
@@ -482,16 +476,15 @@ function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShi
         }
     }
 }
-const missShip = function (board, squares, i, j) {
 
+const missShip = function (board, squares, i, j) {
     squares[i][j].className = "miss";
     board[i + 1][j + 1] = missedSquare;
-
 }
+
 function miss(board, squares, i, j) {
     if (squares[i][j].className === "default") {
         if (turn === "player") {
-            console.log("pl", turn);
             missShip(board, squares, i, j);
             turn = "oponent";
             shootOnClick();
@@ -550,42 +543,31 @@ function aroundShoot(row, col) {
 function randomSquareShoot(player, board, shoot) {
     let randomSquare;
     let squareShooted = 0;
-    console.log("sa", squaresAround);
-
-    for (i in squaresAround) {
-        console.log("s", squaresAround[i][0], squaresAround[i][1]);
-    }
 
     if (squaresAround.length > 0) {
         for (i in squaresAround) {
-            console.log(squaresAround[i][0], squaresAround[i][1])
+
             const r = squaresAround[i][0];
             const c = squaresAround[i][1];
-            console.log("rc", r, c);
 
             if (board[r][c] === shipSquare) {
                 if (turn === "oponent") {
-                    console.log("opo", turn);
                     squareShooted = 1;
                     board[r][c] = hitSquare;
                     aroundShoot(r, c)
                     hitShip(player, board, shipsToFind, leftShips, squares, r - 1, c - 1, currentSumShip, winningSumShip);
                     turn = "player";
                     return { x: r, y: c }
-
                 }
             } else if (board[r][c] === defaultSquare) {
                 if (turn === "oponent") {
-                    console.log("opo", turn);
                     squareShooted = 1;
                     board[r][c] = missedSquare;
                     missShip(board, squares, r - 1, c - 1);
                     turn = "player";
                     return { x: r, y: c }
-
                 }
             }
-
         }
     } else {
 
@@ -595,7 +577,6 @@ function randomSquareShoot(player, board, shoot) {
             randomSquare = { x: randomRow, y: randomCol };
             if (board[randomRow][randomCol] === 0) {
                 if (turn === "oponent") {
-                    console.log("opo", turn);
                     squareShooted = 1;
                     missShip(board, squares, randomRow - 1, randomCol - 1);
                     turn = "player";
@@ -603,19 +584,17 @@ function randomSquareShoot(player, board, shoot) {
             } else if (board[randomRow][randomCol] === shipSquare) {
                 if (turn === "oponent") {
                     aroundShoot(randomRow, randomCol)
-                    console.log("opo", turn);
                     squareShooted = 1;
                     hitShip(player, board, shipsToFind, leftShips, squares, randomRow - 1, randomCol - 1, currentSumShip, winningSumShip);
                     turn = "player";
                 }
             } else {
-                console.log("the same shoot");
+                //console.log("the same shoot");
             }
         }
     }
     board[0][0] = shoot;
     //printBoard(board);
-    console.log(randomSquare)
     return randomSquare;
 }
 
@@ -623,7 +602,6 @@ function shootOnClick() {
     setTimeout(function () {
         shoot++;
         const randomSquare = randomSquareShoot("oponent", board, shoot);
-        console.log(randomSquare)
         if (!randomSquare) {
             shoot--;
             alert("its your turn");
@@ -697,6 +675,15 @@ function playOnClick() {
     }
 }
 
+function resetLeftShips(leftShips) {
+
+    for (ship of leftShips) {
+        ship.classList.remove('ship-left-sunked');
+        //ship.classList.add('ship-left');
+        console.log(ship.className);
+    }
+}
+
 function quitOnClick() {
 
     const answer = confirm("Are you sure you want to end game?");
@@ -704,7 +691,8 @@ function quitOnClick() {
         changeButtons(true);
         resetShipsOnClick();
         document.getElementById("table-oponent").remove();
-
+        resetLeftShips(leftShips);
+        resetLeftShips(leftShipsOponent);
     }
 }
 

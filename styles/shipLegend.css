@@ -48,20 +48,20 @@
 
 }
 
-.ship-left:hover >.ship-left-square {
+/* .ship-left:hover >.ship-left-square {
     background:black;
     cursor: pointer;
-}
+} */
 
 .ship-left-sunked >.ship-left-square {
     background:rgb(208, 224, 224);
 }
 
 
-.ship-left:active >.ship-left-square {
+/* .ship-left:active >.ship-left-square {
     background:green;
     cursor: pointer;
-}
+} */
 
 .ship-left-disappeared {
     display: none;
