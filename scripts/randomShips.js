@@ -267,19 +267,19 @@ function dontShowShips(td) {
     td.className = "default";
 }
 
-function allowDrop(ev) {
-    ev.preventDefault();
-}
+// function allowDrop(ev) {
+//     ev.preventDefault();
+// }
 
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
+// function drag(ev) {
+//     ev.dataTransfer.setData("text", ev.target.id);
+// }
 
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-}
+// function drop(ev) {
+//     ev.preventDefault();
+//     var data = ev.dataTransfer.getData("text");
+//     ev.target.appendChild(document.getElementById(data));
+// }
 
 function drawTable(board, player) {
 
@@ -700,14 +700,17 @@ function quitOnClick() {
     }
 }
 let chosenShip = "none";
+let chosenShipId = 0;
+
 function chooseShip(id) {
 
-    //console.log(id);
+    chosenShipId = parseInt(id[2]);
 
     const shipsToDrag = document.querySelector(".ships-to-drag");
     //console.log(shipsToDrag);
     if (chosenShip !== "none") {
         const chosenSquares = chosenShip.childNodes;
+
         for (index in chosenSquares) {
             if (index % 2 === 1) {
                 console.log(chosenSquares[index])
@@ -728,8 +731,26 @@ function chooseShip(id) {
 
         }
     }
-
-
 }
 
+function hover(squares, I, J) {
+    if (chosenShip !== "none") {
 
+        for (let i = 0; i < chosenShipId; i++) { 
+            squares[I][J + i].className=("ship"); }
+        chosenShip.classList.add("ship-left-disappeared");
+ 
+        chosenShip = "none";
+    }
+}
+
+function hoverS(squares) {
+
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            squares[i][j].addEventListener("click", function () { hover(squares, i, j); }, { once: true });
+        }
+    }
+}
+const squaresD = getSquares("table-player");
+hoverS(squaresD);
