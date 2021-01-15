@@ -699,18 +699,27 @@ function quitOnClick() {
         resetLeftShips(leftShipsOponent);
     }
 }
-let chosenShip;
+let chosenShip = "none";
 function chooseShip(id) {
 
     //console.log(id);
 
     const shipsToDrag = document.querySelector(".ships-to-drag");
     //console.log(shipsToDrag);
+    if (chosenShip !== "none") {
+        const chosenSquares = chosenShip.childNodes;
+        for (index in chosenSquares) {
+            if (index % 2 === 1) {
+                console.log(chosenSquares[index])
+                chosenSquares[index].style.background = "cadetblue";
+
+            }
+        }
+    }
 
     chosenShip = shipsToDrag.querySelector("#" + id);
     console.log(chosenShip)
     const chosenSquares = chosenShip.childNodes;
-
     console.log(chosenSquares)
     for (index in chosenSquares) {
         if (index % 2 === 1) {
@@ -720,4 +729,7 @@ function chooseShip(id) {
         }
     }
 
+
 }
+
+
