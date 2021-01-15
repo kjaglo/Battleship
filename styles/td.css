@@ -47,9 +47,6 @@ td.hit-and-sunk {
 
 }
 
-/* xx */
-
-
 td.default:hover {
     background-color: rgb(230, 151, 142);
 }
@@ -58,8 +55,6 @@ td.default:active {
     background-color: rgb(165, 110, 103);
 
 }
-
-/* yy */
 
 td.near {
 
@@ -71,7 +66,6 @@ td.near {
 td.ship {
 
     background-color: rgb(35, 170, 163);
-    cursor: pointer;
 
 }
 

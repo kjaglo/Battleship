@@ -132,7 +132,7 @@ function sizeThatCanBePlaced(board, params, dxdy) {
     return size;
 }
 
-function chooseShip(params, shipLength) {
+function createShip(params, shipLength) {
 
     const dxdy1 = [{ x: 0, y: 0 }]
 
@@ -186,7 +186,7 @@ function createRandomShips(board) {
 
         while (shipsPlaced[i] === 0) {
             const params = randomParameters();
-            const dxdy = chooseShip(params, shipsLengths[i]);
+            const dxdy = createShip(params, shipsLengths[i]);
             const sizeThatFits = sizeThatCanBePlaced(board, params, dxdy);
 
             if (sizeThatFits === shipsLengths[i]) {
@@ -594,7 +594,7 @@ function randomSquareShoot(player, board, shoot) {
         }
     }
     board[0][0] = shoot;
-    //printBoard(board);
+    printBoard(board);
     return randomSquare;
 }
 
@@ -732,15 +732,44 @@ function chooseShip(id) {
         }
     }
 }
-
+let placedShipsCount=0;
 function hover(squares, I, J) {
+    let ok = false;
     if (chosenShip !== "none") {
 
-        for (let i = 0; i < chosenShipId; i++) { 
-            squares[I][J + i].className=("ship"); }
-        chosenShip.classList.add("ship-left-disappeared");
- 
-        chosenShip = "none";
+
+        params = { dir: "horizontal", x: ++I, y: ++J }
+        const dxdy = createShip(params, chosenShipId);
+        const sizeThatFits = sizeThatCanBePlaced(board, params, dxdy);
+
+        if (sizeThatFits === chosenShipId) {
+            const near = getNearCount(board, params, dxdy);
+            console.log("NNNNNNNN",near)
+            if (8 * chosenShipId === near) {
+                let shipsToFind = []
+                shipsToFind = placeShip(shipsToFind, board, params, dxdy);
+            ok=true;
+            }
+        }
+
+
+        if (ok) {
+            I--;
+            J--;
+            printBoard(board);
+
+            placedShipsCount++;
+            if(placedShipsCount===10){
+                randomOrPlaceYourShips=1;
+            }
+            for (let i = 0; i < chosenShipId; i++) {
+                squares[I][J + i].className = ("ship");
+            }
+
+            chosenShip.classList.add("ship-left-disappeared");
+
+            chosenShip = "none";
+        }
     }
 }
 
