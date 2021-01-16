@@ -12,7 +12,7 @@ const border = 9;
 let turn = "player";
 
 let board = createEmptyBoardAndBorders();
-let shipsToFind;
+let shipsToFind=[];
 let squares;
 drawTable(board, "player");
 let leftShips;
@@ -438,7 +438,7 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 
     const row = I;
     const col = J;
-
+console.log(row,col,squares[row][col].className, squares,shipsToFind, board)
     squares[row][col].className = "hit";
     board[row + 1][col + 1] = hitSquare;
 
@@ -478,6 +478,11 @@ function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShi
 }
 
 const missShip = function (board, squares, i, j) {
+    console.log(i,j)
+    console.log(squares)
+    console.log(board)
+    console.log(squares[i][j].className)
+
     squares[i][j].className = "miss";
     board[i + 1][j + 1] = missedSquare;
 }
@@ -574,6 +579,7 @@ function randomSquareShoot(player, board, shoot) {
         while (squareShooted === 0 && shoot <= 100 && turn === "oponent") {
             const randomRow = Math.round(Math.random() * 100) % 10 + 1;
             const randomCol = Math.round(Math.random() * 100) % 10 + 1;
+            console.log("random",randomRow, randomCol)
             randomSquare = { x: randomRow, y: randomCol };
             if (board[randomRow][randomCol] === 0) {
                 if (turn === "oponent") {
@@ -663,21 +669,7 @@ function randomOponentShips() {
     drawTable(boardOponent, "oponent");
     squaresO = getSquares("table-oponent");
 }
-
-function playOnClick() {
-
-    if (randomOrPlaceYourShips === 1) {
-        randomOrPlaceYourShips = 0;
-        changeButtons(false);
-        randomOponentShips();
-        leftShips = getLeftShips(".ships-left");
-        leftShipsOponent = getLeftShips(".ships-left-oponent");
-        playGuess("player", boardOponent, shipsToFindO, squaresO, leftShipsOponent);
-    }
-    else {
-        alert("Place or random your ships");
-    }
-}
+let placeYourShips=0;
 
 function resetLeftShips(leftShips) {
 
@@ -746,7 +738,6 @@ function hover(squares, I, J) {
             const near = getNearCount(board, params, dxdy);
             console.log("NNNNNNNN",near)
             if (8 * chosenShipId === near) {
-                let shipsToFind = []
                 shipsToFind = placeShip(shipsToFind, board, params, dxdy);
             ok=true;
             }
@@ -754,13 +745,18 @@ function hover(squares, I, J) {
 
 
         if (ok) {
+            console.log(board)
+            console.log(shipsToFind)
             I--;
             J--;
             printBoard(board);
 
             placedShipsCount++;
             if(placedShipsCount===10){
+                placeYourShips=1;
                 randomOrPlaceYourShips=1;
+                console.log(board)
+                console.log(shipsToFind)
             }
             for (let i = 0; i < chosenShipId; i++) {
                 squares[I][J + i].className = ("ship");
@@ -771,6 +767,7 @@ function hover(squares, I, J) {
             chosenShip = "none";
         }
     }
+    
 }
 
 function hoverS(squares) {
@@ -783,3 +780,26 @@ function hoverS(squares) {
 }
 const squaresD = getSquares("table-player");
 hoverS(squaresD);
+
+function playOnClick() {
+    if(placeYourShips === 1) {
+        winMessageClear();
+        //board = createEmptyBoardAndBorders();
+        turn = "player"
+        console.log(board)
+        drawTable(board, "player");
+        squares = getSquares("table-player");
+    }
+        if (randomOrPlaceYourShips === 1) {
+            randomOrPlaceYourShips = 0;
+            changeButtons(false);
+            randomOponentShips();
+            leftShips = getLeftShips(".ships-left");
+            leftShipsOponent = getLeftShips(".ships-left-oponent");
+            playGuess("player", boardOponent, shipsToFindO, squaresO, leftShipsOponent);
+        }
+        else {
+            alert("Place or random your ships");
+        }
+    }
+    
