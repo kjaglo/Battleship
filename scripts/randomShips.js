@@ -646,6 +646,7 @@ function resetShipsOnClick() {
 function changeButtons(play) {
     if (play) {
         document.querySelector("#random-btn").className = "";
+        document.querySelector("#rotate-btn").className = "";
         document.querySelector("#reset-btn").className = "";
         document.querySelector("#play-btn").className = "";
 
@@ -654,6 +655,7 @@ function changeButtons(play) {
         document.querySelector(".ships-to-drag").classList.remove("disappeared");
         document.querySelector("#quit-btn").className = "disappeared";
     } else {
+        document.querySelector("#rotate-btn").className = "disappeared";
         document.querySelector("#random-btn").className = "disappeared";
         document.querySelector("#reset-btn").className = "disappeared";
         document.querySelector("#play-btn").className = "disappeared";
