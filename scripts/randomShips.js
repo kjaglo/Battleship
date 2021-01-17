@@ -8,7 +8,7 @@ const sunkSquare = 3;
 const nearShipSquare = 4;
 const shipSquare = 5;
 const border = 9;
-
+let setDirection = "vertical";
 let turn = "player";
 
 let board = createEmptyBoardAndBorders();
@@ -618,8 +618,6 @@ function shootOnClick() {
         turn = "player";
         printBoard(board);
     }, 000);//wait 1 sec    
-
-
 }
 
 function randomShipsOnClick() {
@@ -729,8 +727,13 @@ function hover(squares, I, J) {
     let ok = false;
     if (chosenShip !== "none") {
 
-
+if(setDirection==="horizontal"){
         params = { dir: "horizontal", x: ++I, y: ++J }
+}
+else {
+    params = { dir: "vertical", x: ++I, y: ++J }
+
+}
         const dxdy = createShip(params, chosenShipId);
         const sizeThatFits = sizeThatCanBePlaced(board, params, dxdy);
 
@@ -758,8 +761,15 @@ function hover(squares, I, J) {
                 console.log(board)
                 console.log(shipsToFind)
             }
-            for (let i = 0; i < chosenShipId; i++) {
-                squares[I][J + i].className = ("ship");
+            if(setDirection==="horizontal"){
+                for (let i = 0; i < chosenShipId; i++) {
+                    squares[I][J + i].className = ("ship");
+                }
+            }
+            else{
+                for (let i = 0; i < chosenShipId; i++) {
+                    squares[I+i][J].className = ("ship");
+                }
             }
 
             chosenShip.classList.add("ship-left-disappeared");
