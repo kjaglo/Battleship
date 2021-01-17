@@ -696,7 +696,11 @@ function quitOnClick() {
 }
 let chosenShip = "none";
 let chosenShipId = 0;
-
+function rotateShipOnClick() {
+    if (setDirection === "horizontal") { setDirection = "vertical" } else {
+        setDirection = "horizontal"
+    }
+}
 function chooseShip(id) {
 
     chosenShipId = parseInt(id[2]);
@@ -829,7 +833,7 @@ function hoverSquareColor(square) {
                     document.querySelector(squareID).className = "hoverSquare";
                 }
             } else {
-                const squareID = "#id" + (parseInt(square.id[2])+i).toString() + (parseInt(square.id[3])).toString();
+                const squareID = "#id" + (parseInt(square.id[2]) + i).toString() + (parseInt(square.id[3])).toString();
                 if (document.querySelector(squareID).className === "default") {
                     console.log(square.id)
                     console.log(squareID)
@@ -852,7 +856,7 @@ function defaultSquareColor(square) {
                     }
                 }
             } else {
-                const squareID = "#id" + (parseInt(square.id[2])+i).toString() + (parseInt(square.id[3])).toString();
+                const squareID = "#id" + (parseInt(square.id[2]) + i).toString() + (parseInt(square.id[3])).toString();
 
                 if (document.querySelector(squareID).className === "hoverSquare") {
                     {
