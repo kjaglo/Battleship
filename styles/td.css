@@ -47,9 +47,9 @@ td.hit-and-sunk {
 
 }
 
-td.default:hover {
+/* td.default:hover {
     background-color: rgb(230, 151, 142);
-}
+} */
 
 td.default:active {
     background-color: rgb(165, 110, 103);
@@ -70,4 +70,7 @@ td.ship {
 }
 
 
+.hoverSquare{
+    background-color: blue;
+}
 

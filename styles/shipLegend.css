@@ -41,10 +41,10 @@
     height: 35px;
 }
 
-/* .ship-left:hover >.ship-left-square {
-    background:black;
+.ship-left:hover >.ship-left-square {
+    background:rgb(48, 120, 122);
     cursor: pointer;
-} */
+}
 
 .ship-left-sunked >.ship-left-square {
     background:rgb(208, 224, 224);

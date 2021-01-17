@@ -8,11 +8,11 @@ const sunkSquare = 3;
 const nearShipSquare = 4;
 const shipSquare = 5;
 const border = 9;
-let setDirection = "vertical";
+let setDirection = "vertical";//vertical horizontal
 let turn = "player";
 
 let board = createEmptyBoardAndBorders();
-let shipsToFind=[];
+let shipsToFind = [];
 let squares;
 drawTable(board, "player");
 let leftShips;
@@ -324,13 +324,18 @@ function drawTable(board, player) {
 
             else {
                 const td = document.createElement('td');
+                //console.log(toString(i))
+                if (player === "player") {
+                    td.id = "id" + (i - 1).toString() + j.toString();
+                }
                 //td.appendChild(document.createTextNode("i"+(i-1)+" j"+j)); 
                 showShips(board, td, i, j);
                 //dontShowShips(td);
                 //ondrop="drop(event)" ondragover="allowDrop(event)"
-                td.setAttribute("ondrop", "drop(event)");
-                td.setAttribute("ondragover", "allowDrop(event)");
-
+                // td.setAttribute("ondrop", "drop(event)");
+                // td.setAttribute("ondragover", "allowDrop(event)");
+                td.setAttribute("onmouseover", "hoverSquareColor(this)");
+                td.setAttribute("onmouseout", "defaultSquareColor(this)");
                 tr.appendChild(td);
             }
         }
@@ -438,7 +443,7 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 
     const row = I;
     const col = J;
-console.log(row,col,squares[row][col].className, squares,shipsToFind, board)
+    console.log(row, col, squares[row][col].className, squares, shipsToFind, board)
     squares[row][col].className = "hit";
     board[row + 1][col + 1] = hitSquare;
 
@@ -478,7 +483,7 @@ function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShi
 }
 
 const missShip = function (board, squares, i, j) {
-    console.log(i,j)
+    console.log(i, j)
     console.log(squares)
     console.log(board)
     console.log(squares[i][j].className)
@@ -579,7 +584,7 @@ function randomSquareShoot(player, board, shoot) {
         while (squareShooted === 0 && shoot <= 100 && turn === "oponent") {
             const randomRow = Math.round(Math.random() * 100) % 10 + 1;
             const randomCol = Math.round(Math.random() * 100) % 10 + 1;
-            console.log("random",randomRow, randomCol)
+            console.log("random", randomRow, randomCol)
             randomSquare = { x: randomRow, y: randomCol };
             if (board[randomRow][randomCol] === 0) {
                 if (turn === "oponent") {
@@ -667,7 +672,7 @@ function randomOponentShips() {
     drawTable(boardOponent, "oponent");
     squaresO = getSquares("table-oponent");
 }
-let placeYourShips=0;
+let placeYourShips = 0;
 
 function resetLeftShips(leftShips) {
 
@@ -722,27 +727,27 @@ function chooseShip(id) {
         }
     }
 }
-let placedShipsCount=0;
+let placedShipsCount = 0;
 function hover(squares, I, J) {
     let ok = false;
     if (chosenShip !== "none") {
 
-if(setDirection==="horizontal"){
-        params = { dir: "horizontal", x: ++I, y: ++J }
-}
-else {
-    params = { dir: "vertical", x: ++I, y: ++J }
+        if (setDirection === "horizontal") {
+            params = { dir: "horizontal", x: ++I, y: ++J }
+        }
+        else {
+            params = { dir: "vertical", x: ++I, y: ++J }
 
-}
+        }
         const dxdy = createShip(params, chosenShipId);
         const sizeThatFits = sizeThatCanBePlaced(board, params, dxdy);
 
         if (sizeThatFits === chosenShipId) {
             const near = getNearCount(board, params, dxdy);
-            console.log("NNNNNNNN",near)
+            console.log("NNNNNNNN", near)
             if (8 * chosenShipId === near) {
                 shipsToFind = placeShip(shipsToFind, board, params, dxdy);
-            ok=true;
+                ok = true;
             }
         }
 
@@ -755,20 +760,20 @@ else {
             printBoard(board);
 
             placedShipsCount++;
-            if(placedShipsCount===10){
-                placeYourShips=1;
-                randomOrPlaceYourShips=1;
+            if (placedShipsCount === 10) {
+                placeYourShips = 1;
+                randomOrPlaceYourShips = 1;
                 console.log(board)
                 console.log(shipsToFind)
             }
-            if(setDirection==="horizontal"){
+            if (setDirection === "horizontal") {
                 for (let i = 0; i < chosenShipId; i++) {
-                    squares[I][J + i].className = ("ship");
+                    squares[I][J + i].className = "ship";
                 }
             }
-            else{
+            else {
                 for (let i = 0; i < chosenShipId; i++) {
-                    squares[I+i][J].className = ("ship");
+                    squares[I + i][J].className = "ship";
                 }
             }
 
@@ -777,7 +782,7 @@ else {
             chosenShip = "none";
         }
     }
-    
+
 }
 
 function hoverS(squares) {
@@ -792,7 +797,7 @@ const squaresD = getSquares("table-player");
 hoverS(squaresD);
 
 function playOnClick() {
-    if(placeYourShips === 1) {
+    if (placeYourShips === 1) {
         winMessageClear();
         //board = createEmptyBoardAndBorders();
         turn = "player"
@@ -800,16 +805,62 @@ function playOnClick() {
         drawTable(board, "player");
         squares = getSquares("table-player");
     }
-        if (randomOrPlaceYourShips === 1) {
-            randomOrPlaceYourShips = 0;
-            changeButtons(false);
-            randomOponentShips();
-            leftShips = getLeftShips(".ships-left");
-            leftShipsOponent = getLeftShips(".ships-left-oponent");
-            playGuess("player", boardOponent, shipsToFindO, squaresO, leftShipsOponent);
-        }
-        else {
-            alert("Place or random your ships");
+    if (randomOrPlaceYourShips === 1) {
+        randomOrPlaceYourShips = 0;
+        changeButtons(false);
+        randomOponentShips();
+        leftShips = getLeftShips(".ships-left");
+        leftShipsOponent = getLeftShips(".ships-left-oponent");
+        playGuess("player", boardOponent, shipsToFindO, squaresO, leftShipsOponent);
+    }
+    else {
+        alert("Place or random your ships");
+    }
+}
+
+function hoverSquareColor(square) {
+    if (chosenShip !== "none") {
+        for (let i = 0; i < chosenShipId; i++) {
+            if (setDirection === "horizontal") {
+                const squareID = "#id" + (parseInt(square.id[2])).toString() + (parseInt(square.id[3]) + i).toString();
+                if (document.querySelector(squareID).className === "default") {
+                    console.log(square.id)
+                    console.log(squareID)
+                    document.querySelector(squareID).className = "hoverSquare";
+                }
+            } else {
+                const squareID = "#id" + (parseInt(square.id[2])+i).toString() + (parseInt(square.id[3])).toString();
+                if (document.querySelector(squareID).className === "default") {
+                    console.log(square.id)
+                    console.log(squareID)
+                    document.querySelector(squareID).className = "hoverSquare";
+                }
+            }
         }
     }
-    
+}
+
+function defaultSquareColor(square) {
+    if (chosenShip !== "none") {
+        for (let i = 0; i < chosenShipId; i++) {
+            if (setDirection === "horizontal") {
+                const squareID = "#id" + (parseInt(square.id[2])).toString() + (parseInt(square.id[3]) + i).toString();
+
+                if (document.querySelector(squareID).className === "hoverSquare") {
+                    {
+                        document.querySelector(squareID).className = "default";
+                    }
+                }
+            } else {
+                const squareID = "#id" + (parseInt(square.id[2])+i).toString() + (parseInt(square.id[3])).toString();
+
+                if (document.querySelector(squareID).className === "hoverSquare") {
+                    {
+                        document.querySelector(squareID).className = "default";
+                    }
+                }
+            }
+        }
+    }
+}
+
