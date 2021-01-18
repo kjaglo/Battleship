@@ -652,13 +652,15 @@ function resetShipsToDrag() {
         }
     }
 }
-
+let squaresD;
 function resetShipsOnClick() {
-    let board = createEmptyBoardAndBorders();
+    board = createEmptyBoardAndBorders();
     randomOrPlaceYourShips = 0;
     resetShipsToDrag();
 console.log(leftShips)
     drawTable(board, "player");
+     squaresD = getSquares("table-player");
+hoverS(squaresD);
 }
 
 
@@ -820,9 +822,9 @@ function hoverS(squares) {
         }
     }
 }
-const squaresD = getSquares("table-player");
-hoverS(squaresD);
 
+squaresD = getSquares("table-player");
+hoverS(squaresD);
 function playOnClick() {
     if (placeYourShips === 1) {
         winMessageClear();
