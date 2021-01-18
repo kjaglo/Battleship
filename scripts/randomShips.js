@@ -1,6 +1,6 @@
 const size = 10;
 const boardSize = size + 2;
-
+let draggedShips=[];
 const defaultSquare = 0;
 const missedSquare = 1;
 const hitSquare = 2;
@@ -504,7 +504,7 @@ function miss(board, squares, i, j) {
     }
 }
 
-function playGuess(player, board, shipsToFind, squares, leftShips, texts) {
+function playGuess(player, board, shipsToFind, squares, leftShips) {
 
     let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
@@ -635,13 +635,34 @@ function randomShipsOnClick() {
     squares = getSquares("table-player");
 }
 
+function resetShipsToDrag() {
+    for (ship of draggedShips){
+        console.log(draggedShips)
+
+        console.log(ship)
+        ship.classList.remove("ship-left-disappeared")
+        const chosenSquares = ship.childNodes;
+
+        for (index in chosenSquares) {
+            if (index % 2 === 1) {
+                //console.log(chosenSquares[index])
+                chosenSquares[index].style.background = "cadetblue";
+
+            }
+        }
+    }
+}
 
 function resetShipsOnClick() {
     let board = createEmptyBoardAndBorders();
     randomOrPlaceYourShips = 0;
-
+    resetShipsToDrag();
+console.log(leftShips)
     drawTable(board, "player");
 }
+
+
+
 
 function changeButtons(play) {
     if (play) {
@@ -714,7 +735,7 @@ function chooseShip(id) {
 
         for (index in chosenSquares) {
             if (index % 2 === 1) {
-                console.log(chosenSquares[index])
+                //console.log(chosenSquares[index])
                 chosenSquares[index].style.background = "cadetblue";
 
             }
@@ -784,7 +805,7 @@ function hover(squares, I, J) {
             }
 
             chosenShip.classList.add("ship-left-disappeared");
-
+            draggedShips.push(chosenShip);
             chosenShip = "none";
         }
     }
