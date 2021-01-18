@@ -625,9 +625,27 @@ function shootOnClick() {
     }, 000);//wait 1 sec    
 }
 
+function clearShips() {
+
+    const shipsToDrag = document.querySelector(".ships-to-drag").childNodes;
+
+    for (index in shipsToDrag) {
+        console.log(index)
+
+        if (index % 2 === 1) {
+            console.log(shipsToDrag[index])
+            shipsToDrag[index].classList.add("ship-left-disappeared");
+
+        }
+    }
+    console.log(shipsToDrag.childNodes)
+    //ship.classList.add("ship-left-disappeared")
+
+
+}
 function randomShipsOnClick() {
     resetShipsOnClick()
-
+    clearShips()
     winMessageClear();
     board = createEmptyBoardAndBorders();
     turn = "player"
@@ -638,11 +656,22 @@ function randomShipsOnClick() {
 }
 
 function resetShipsToDrag() {
+    const shipsToDrag = document.querySelector(".ships-to-drag").childNodes;
+
+    for (index in shipsToDrag) {
+        console.log(index)
+
+        if (index % 2 === 1) {
+            console.log(shipsToDrag[index])
+            shipsToDrag[index].classList.remove("ship-left-disappeared");
+
+        }
+    }
     for (ship of draggedShips) {
         console.log(draggedShips)
 
         console.log(ship)
-        ship.classList.remove("ship-left-disappeared")
+        //ship.classList.remove("ship-left-disappeared")
         const chosenSquares = ship.childNodes;
 
         for (index in chosenSquares) {
@@ -654,6 +683,10 @@ function resetShipsToDrag() {
         }
     }
 }
+
+
+
+
 let squaresD;
 function resetShipsOnClick() {
     board = createEmptyBoardAndBorders();
