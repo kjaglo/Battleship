@@ -1,6 +1,6 @@
 const size = 10;
 const boardSize = size + 2;
-let draggedShips=[];
+let draggedShips = [];
 const defaultSquare = 0;
 const missedSquare = 1;
 const hitSquare = 2;
@@ -626,6 +626,8 @@ function shootOnClick() {
 }
 
 function randomShipsOnClick() {
+    resetShipsOnClick()
+
     winMessageClear();
     board = createEmptyBoardAndBorders();
     turn = "player"
@@ -636,7 +638,7 @@ function randomShipsOnClick() {
 }
 
 function resetShipsToDrag() {
-    for (ship of draggedShips){
+    for (ship of draggedShips) {
         console.log(draggedShips)
 
         console.log(ship)
@@ -657,10 +659,10 @@ function resetShipsOnClick() {
     board = createEmptyBoardAndBorders();
     randomOrPlaceYourShips = 0;
     resetShipsToDrag();
-console.log(leftShips)
+    console.log(leftShips)
     drawTable(board, "player");
-     squaresD = getSquares("table-player");
-hoverS(squaresD);
+    squaresD = getSquares("table-player");
+    hoverS(squaresD);
 }
 
 
@@ -691,7 +693,6 @@ function changeButtons(play) {
 }
 
 function randomOponentShips() {
-
     boardOponent = createEmptyBoardAndBorders();
     shipsToFindO = createRandomShips(boardOponent);
     drawTable(boardOponent, "oponent");
