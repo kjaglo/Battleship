@@ -321,7 +321,7 @@ function drawTable(board, player) {
                 //td.appendChild(document.createTextNode("i"+(i-1)+" j"+j)); 
                 showShips(board, td, i, j);
                 //dontShowShips(td);
-                
+
                 td.setAttribute("onmouseover", "hoverSquareColor(this)");
                 td.setAttribute("onmouseout", "defaultSquareColor(this)");
                 tr.appendChild(td);
@@ -409,22 +409,37 @@ function sunkShip(player, shipsToFind, squares, i, r, c) {
     }
 }
 
-function winMessageClear() {
-    if (document.getElementById("won")) {
-        document.getElementById("won").remove();
-    }
-}
-
 function winMessage(player) {
-
-    let body = document.getElementsByTagName('body')[0];
-    let div = document.createElement('div');
+    setTimeout(function () {
     if (player === "player") {
-        div.innerHTML = "<h1 id='won'>YOU WON!!!</h1>";
+        alert("You won! Play again?");
+
+
     } else {
-        div.innerHTML = "<h1 id='won'>YOU LOSE!!!</h1>";
+        alert("You lost. Play again?");
+
     }
-    body.appendChild(div);
+
+    shoot = 0;
+
+    randomOrPlaceYourShips = 0;
+    squaresAround = [];
+
+    currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+
+    placeYourShips = 0;
+    chosenShip = "none";
+    chosenShipId = 0;
+    placedShipsCount = 0;
+    shipsToFind = [];
+    shipsToFindO = [];
+    changeButtons(true);
+    resetShipsOnClick();
+    document.getElementById("table-oponent").remove();
+    resetLeftShips(leftShips);
+    resetLeftShips(leftShipsOponent);
+}, 1000);//wait 1 sec    
 }
 
 function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
@@ -470,7 +485,7 @@ function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShi
 }
 
 const missShip = function (board, squares, i, j) {
-   
+
 
     squares[i][j].className = "miss";
     board[i + 1][j + 1] = missedSquare;
@@ -588,7 +603,7 @@ function randomSquareShoot(player, board, shoot) {
         }
     }
     board[0][0] = shoot;
-    printBoard(board);
+    //printBoard(board);
     return randomSquare;
 }
 
@@ -623,7 +638,6 @@ function clearShips() {
 function randomShipsOnClick() {
     resetShipsOnClick()
     clearShips()
-    winMessageClear();
     board = createEmptyBoardAndBorders();
     turn = "player"
     shipsToFind = createRandomShips(board);
@@ -705,6 +719,20 @@ function quitOnClick() {
 
     const answer = confirm("Are you sure you want to end game?");
     if (answer) {
+        shoot = 0;
+
+        randomOrPlaceYourShips = 0;
+        squaresAround = [];
+
+        currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+
+        placeYourShips = 0;
+        chosenShip = "none";
+        chosenShipId = 0;
+        placedShipsCount = 0;
+        shipsToFind = [];
+        shipsToFindO = [];
         changeButtons(true);
         resetShipsOnClick();
         document.getElementById("table-oponent").remove();
@@ -803,7 +831,6 @@ function hoverS(squares) {
 
 function playOnClick() {
     if (placeYourShips === 1) {
-        winMessageClear();
         turn = "player"
         drawTable(board, "player");
         squares = getSquares("table-player");
