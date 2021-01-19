@@ -16,6 +16,7 @@ let shipsToFind = [];
 let squares;
 drawTable(board, "player");
 let leftShips;
+let squaresD;
 
 let boardOponent;
 let shipsToFindO;
@@ -31,6 +32,10 @@ let squaresAround = [];
 let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 
+let placeYourShips = 0;
+let chosenShip = "none";
+let chosenShipId = 0;
+let placedShipsCount = 0;
 
 function createEmptyBoardAndBorders() {
     let board = []
@@ -267,20 +272,6 @@ function dontShowShips(td) {
     td.className = "default";
 }
 
-// function allowDrop(ev) {
-//     ev.preventDefault();
-// }
-
-// function drag(ev) {
-//     ev.dataTransfer.setData("text", ev.target.id);
-// }
-
-// function drop(ev) {
-//     ev.preventDefault();
-//     var data = ev.dataTransfer.getData("text");
-//     ev.target.appendChild(document.getElementById(data));
-// }
-
 function drawTable(board, player) {
 
     const container = document.getElementById('container');
@@ -324,16 +315,13 @@ function drawTable(board, player) {
 
             else {
                 const td = document.createElement('td');
-                //console.log(toString(i))
                 if (player === "player") {
                     td.id = "id" + (i - 1).toString() + j.toString();
                 }
                 //td.appendChild(document.createTextNode("i"+(i-1)+" j"+j)); 
                 showShips(board, td, i, j);
                 //dontShowShips(td);
-                //ondrop="drop(event)" ondragover="allowDrop(event)"
-                // td.setAttribute("ondrop", "drop(event)");
-                // td.setAttribute("ondragover", "allowDrop(event)");
+                
                 td.setAttribute("onmouseover", "hoverSquareColor(this)");
                 td.setAttribute("onmouseout", "defaultSquareColor(this)");
                 tr.appendChild(td);
@@ -443,7 +431,6 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 
     const row = I;
     const col = J;
-    console.log(row, col, squares[row][col].className, squares, shipsToFind, board)
     squares[row][col].className = "hit";
     board[row + 1][col + 1] = hitSquare;
 
@@ -483,10 +470,7 @@ function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShi
 }
 
 const missShip = function (board, squares, i, j) {
-    console.log(i, j)
-    console.log(squares)
-    console.log(board)
-    console.log(squares[i][j].className)
+   
 
     squares[i][j].className = "miss";
     board[i + 1][j + 1] = missedSquare;
@@ -584,7 +568,6 @@ function randomSquareShoot(player, board, shoot) {
         while (squareShooted === 0 && shoot <= 100 && turn === "oponent") {
             const randomRow = Math.round(Math.random() * 100) % 10 + 1;
             const randomCol = Math.round(Math.random() * 100) % 10 + 1;
-            console.log("random", randomRow, randomCol)
             randomSquare = { x: randomRow, y: randomCol };
             if (board[randomRow][randomCol] === 0) {
                 if (turn === "oponent") {
@@ -630,19 +613,13 @@ function clearShips() {
     const shipsToDrag = document.querySelector(".ships-to-drag").childNodes;
 
     for (index in shipsToDrag) {
-        console.log(index)
 
         if (index % 2 === 1) {
-            console.log(shipsToDrag[index])
             shipsToDrag[index].classList.add("ship-left-disappeared");
-
         }
     }
-    console.log(shipsToDrag.childNodes)
-    //ship.classList.add("ship-left-disappeared")
-
-
 }
+
 function randomShipsOnClick() {
     resetShipsOnClick()
     clearShips()
@@ -659,24 +636,17 @@ function resetShipsToDrag() {
     const shipsToDrag = document.querySelector(".ships-to-drag").childNodes;
 
     for (index in shipsToDrag) {
-        console.log(index)
 
         if (index % 2 === 1) {
-            console.log(shipsToDrag[index])
             shipsToDrag[index].classList.remove("ship-left-disappeared");
-
         }
     }
     for (ship of draggedShips) {
-        console.log(draggedShips)
 
-        console.log(ship)
-        //ship.classList.remove("ship-left-disappeared")
         const chosenSquares = ship.childNodes;
 
         for (index in chosenSquares) {
             if (index % 2 === 1) {
-                //console.log(chosenSquares[index])
                 chosenSquares[index].style.background = "cadetblue";
 
             }
@@ -684,22 +654,14 @@ function resetShipsToDrag() {
     }
 }
 
-
-
-
-let squaresD;
 function resetShipsOnClick() {
     board = createEmptyBoardAndBorders();
     randomOrPlaceYourShips = 0;
     resetShipsToDrag();
-    console.log(leftShips)
     drawTable(board, "player");
     squaresD = getSquares("table-player");
     hoverS(squaresD);
 }
-
-
-
 
 function changeButtons(play) {
     if (play) {
@@ -731,14 +693,11 @@ function randomOponentShips() {
     drawTable(boardOponent, "oponent");
     squaresO = getSquares("table-oponent");
 }
-let placeYourShips = 0;
 
 function resetLeftShips(leftShips) {
 
     for (ship of leftShips) {
         ship.classList.remove('ship-left-sunked');
-        //ship.classList.add('ship-left');
-        console.log(ship.className);
     }
 }
 
@@ -753,44 +712,37 @@ function quitOnClick() {
         resetLeftShips(leftShipsOponent);
     }
 }
-let chosenShip = "none";
-let chosenShipId = 0;
+
 function rotateShipOnClick() {
     if (setDirection === "horizontal") { setDirection = "vertical" } else {
         setDirection = "horizontal"
     }
 }
+
 function chooseShip(id) {
 
     chosenShipId = parseInt(id[2]);
 
     const shipsToDrag = document.querySelector(".ships-to-drag");
-    //console.log(shipsToDrag);
     if (chosenShip !== "none") {
         const chosenSquares = chosenShip.childNodes;
 
         for (index in chosenSquares) {
             if (index % 2 === 1) {
-                //console.log(chosenSquares[index])
                 chosenSquares[index].style.background = "cadetblue";
-
             }
         }
     }
 
     chosenShip = shipsToDrag.querySelector("#" + id);
-    console.log(chosenShip)
     const chosenSquares = chosenShip.childNodes;
-    console.log(chosenSquares)
     for (index in chosenSquares) {
         if (index % 2 === 1) {
-            console.log(chosenSquares[index])
             chosenSquares[index].style.background = "red";
-
         }
     }
 }
-let placedShipsCount = 0;
+
 function hover(squares, I, J) {
     let ok = false;
     if (chosenShip !== "none") {
@@ -800,14 +752,12 @@ function hover(squares, I, J) {
         }
         else {
             params = { dir: "vertical", x: ++I, y: ++J }
-
         }
         const dxdy = createShip(params, chosenShipId);
         const sizeThatFits = sizeThatCanBePlaced(board, params, dxdy);
 
         if (sizeThatFits === chosenShipId) {
             const near = getNearCount(board, params, dxdy);
-            console.log("NNNNNNNN", near)
             if (8 * chosenShipId === near) {
                 shipsToFind = placeShip(shipsToFind, board, params, dxdy);
                 ok = true;
@@ -816,18 +766,13 @@ function hover(squares, I, J) {
 
 
         if (ok) {
-            console.log(board)
-            console.log(shipsToFind)
             I--;
             J--;
-            printBoard(board);
-
+            //printBoard(board);
             placedShipsCount++;
             if (placedShipsCount === 10) {
                 placeYourShips = 1;
                 randomOrPlaceYourShips = 1;
-                console.log(board)
-                console.log(shipsToFind)
             }
             if (setDirection === "horizontal") {
                 for (let i = 0; i < chosenShipId; i++) {
@@ -845,7 +790,6 @@ function hover(squares, I, J) {
             chosenShip = "none";
         }
     }
-
 }
 
 function hoverS(squares) {
@@ -857,14 +801,10 @@ function hoverS(squares) {
     }
 }
 
-squaresD = getSquares("table-player");
-hoverS(squaresD);
 function playOnClick() {
     if (placeYourShips === 1) {
         winMessageClear();
-        //board = createEmptyBoardAndBorders();
         turn = "player"
-        console.log(board)
         drawTable(board, "player");
         squares = getSquares("table-player");
     }
@@ -887,15 +827,11 @@ function hoverSquareColor(square) {
             if (setDirection === "horizontal") {
                 const squareID = "#id" + (parseInt(square.id[2])).toString() + (parseInt(square.id[3]) + i).toString();
                 if (document.querySelector(squareID).className === "default") {
-                    console.log(square.id)
-                    console.log(squareID)
                     document.querySelector(squareID).className = "hoverSquare";
                 }
             } else {
                 const squareID = "#id" + (parseInt(square.id[2]) + i).toString() + (parseInt(square.id[3])).toString();
                 if (document.querySelector(squareID).className === "default") {
-                    console.log(square.id)
-                    console.log(squareID)
                     document.querySelector(squareID).className = "hoverSquare";
                 }
             }
@@ -927,3 +863,5 @@ function defaultSquareColor(square) {
     }
 }
 
+squaresD = getSquares("table-player");
+hoverS(squaresD);
