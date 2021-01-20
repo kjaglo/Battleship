@@ -12,7 +12,7 @@
 
 .ship-left-square {
     height: 35px;
-    background-color: cadetblue;
+    background-color: rgb(35, 170, 163);
     margin:1px;
     border-radius: 10%;
     width: 35px;
@@ -40,7 +40,7 @@
 }
 
 .ship-left:hover >.ship-left-square {
-    background:rgb(48, 120, 122);
+    background-color: rgb(30, 139, 134);
     cursor: pointer;
 }
 

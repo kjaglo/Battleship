@@ -39,5 +39,9 @@ td.ship {
 }
 
 .hoverSquare{
-    background-color: rgb(208, 224, 224);
+    background-color: rgb(252, 203, 198);
+}
+
+.chosenSquare{
+    background-color:rgb(21, 109, 104);
 }

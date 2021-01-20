@@ -411,32 +411,30 @@ function sunkShip(player, shipsToFind, squares, i, r, c) {
 
 function winMessage(player) {
     setTimeout(function () {
-    if (player === "player") {
-        alert("You won! Play again?");
+        if (player === "player") {
+            alert("You won! Play again?");
 
+        } else {
+            alert("You lost. Play again?");
+        }
 
-    } else {
-        alert("You lost. Play again?");
-
-    }
-
-    shoot = 0;
-    randomOrPlaceYourShips = 0;
-    squaresAround = [];
-    currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
-    placeYourShips = 0;
-    chosenShip = "none";
-    chosenShipId = 0;
-    placedShipsCount = 0;
-    shipsToFind = [];
-    shipsToFindO = [];
-    changeButtons(true);
-    resetShipsOnClick();
-    document.getElementById("table-oponent").remove();
-    resetLeftShips(leftShips);
-    resetLeftShips(leftShipsOponent);
-}, 1000);//wait 1 sec    
+        shoot = 0;
+        randomOrPlaceYourShips = 0;
+        squaresAround = [];
+        currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+        placeYourShips = 0;
+        chosenShip = "none";
+        chosenShipId = 0;
+        placedShipsCount = 0;
+        shipsToFind = [];
+        shipsToFindO = [];
+        changeButtons(true);
+        resetShipsOnClick();
+        document.getElementById("table-oponent").remove();
+        resetLeftShips(leftShips);
+        resetLeftShips(leftShipsOponent);
+    }, 1000);//wait 1 sec    
 }
 
 function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
@@ -482,8 +480,6 @@ function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShi
 }
 
 const missShip = function (board, squares, i, j) {
-
-
     squares[i][j].className = "miss";
     board[i + 1][j + 1] = missedSquare;
 }
@@ -764,7 +760,7 @@ function chooseShip(id) {
     const chosenSquares = chosenShip.childNodes;
     for (index in chosenSquares) {
         if (index % 2 === 1) {
-            chosenSquares[index].style.background = "red";
+            chosenSquares[index].style.background = "rgb(13, 82, 78)";
         }
     }
 }
