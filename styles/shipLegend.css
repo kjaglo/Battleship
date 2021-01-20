@@ -66,7 +66,7 @@
     grid-column-gap: 80px;
     grid-template-rows: auto;
     grid-template-areas: 
-    "header header header header"
+    "headerRotate header header header"
     " ships-left  player oponent ships-left-oponent"
     "footer footer footer footer";
 }
@@ -86,7 +86,7 @@
     /* background-color:rgb(255, 196, 190); */
     margin: 30px;
     border-radius: 1%;
-    border: black 1px solid;
+    border: rgb(155, 153, 153) 1px solid;
     justify-self: center;
     width:160px;
     height: 465px;
@@ -98,7 +98,7 @@
     /* background-color:rgb(255, 196, 190); */
     margin: 30px;
     border-radius: 1%;
-    border: black 1px solid;
+    border: rgb(155, 153, 153) 1px solid;
     width:160px;
     justify-self: center;
 }

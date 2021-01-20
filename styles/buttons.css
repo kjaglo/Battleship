@@ -8,27 +8,28 @@ button {
     outline:none;
     color:white;
     font-family:monospace;
-
     width: 100px;
-
 }
+
 .disappeared {
     display: none;
 }
+
 button:hover {
     background-color: rgb(85, 84, 83);
     color:white;
     border: none;
     outline:none;
-
 }
 
 button:active {
     background-color: rgb(73, 73, 73);
     color:white;
     border: none;
-outline:none;
-
-    
+    outline:none;  
 }
 
+#rotate-btn {
+    grid-area: headerRotate;
+    justify-self: center;
+}
