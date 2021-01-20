@@ -666,6 +666,7 @@ function resetShipsToDrag() {
 }
 
 function resetShipsOnClick() {
+    chosenShip = "none";
     board = createEmptyBoardAndBorders();
     randomOrPlaceYourShips = 0;
     resetShipsToDrag();
