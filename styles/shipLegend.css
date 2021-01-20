@@ -4,7 +4,6 @@
 
 .ship-left {
     height: 30px;
-    /* background-color: gray; */
     margin:10px;
     border-radius: 5%;
     display: flex;
@@ -14,7 +13,6 @@
 .ship-left-square {
     height: 35px;
     background-color: cadetblue;
-    /* background-color: rgb(248, 160, 150); */
     margin:1px;
     border-radius: 10%;
     width: 35px;
@@ -50,12 +48,6 @@
     background:rgb(208, 224, 224);
 }
 
-
-/* .ship-left:active >.ship-left-square {
-    background:green;
-    cursor: pointer;
-} */
-
 .ship-left-disappeared {
     display: none;
 }
@@ -83,7 +75,6 @@
 
 .ships-left, .ships-to-drag {
     grid-area: ships-left;
-    /* background-color:rgb(255, 196, 190); */
     margin: 30px;
     border-radius: 1%;
     border: rgb(155, 153, 153) 1px solid;
@@ -95,11 +86,9 @@
 
 .ships-left-oponent {
     grid-area: ships-left-oponent;
-    /* background-color:rgb(255, 196, 190); */
     margin: 30px;
     border-radius: 1%;
     border: rgb(155, 153, 153) 1px solid;
     width:160px;
     justify-self: center;
 }
-

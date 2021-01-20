@@ -421,13 +421,10 @@ function winMessage(player) {
     }
 
     shoot = 0;
-
     randomOrPlaceYourShips = 0;
     squaresAround = [];
-
     currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
-
     placeYourShips = 0;
     chosenShip = "none";
     chosenShipId = 0;

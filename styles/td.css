@@ -1,14 +1,3 @@
-td {
-    background-color:rgb(248, 160, 150);
-    /* border: black 1px solid; */
-    border-radius: 10%;
-    min-width: 30px;
-    min-height: 30px;
-    max-width: 30px;
-    max-height: 30px;
-    /* cursor: pointer; */
-}
-
 td.default {
     background-color:rgb(248, 160, 150);
     min-width: 30px;
@@ -32,9 +21,9 @@ td.hit-and-sunk {
 
 }
 
-/* td.default:hover {
+td.default:hover {
     background-color: rgb(230, 151, 142);
-} */
+}
 
 td.default:active {
     background-color: rgb(165, 110, 103);
@@ -52,4 +41,3 @@ td.ship {
 .hoverSquare{
     background-color: rgb(208, 224, 224);
 }
-
