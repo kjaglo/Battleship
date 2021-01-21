@@ -32,4 +32,9 @@ button:active {
 #rotate-btn {
     grid-area: headerRotate;
     justify-self: center;
+    background-color:cadetblue;
+}
+#rotate-btn:hover {
+ 
+    background-color:rgb(60, 102, 104);
 }

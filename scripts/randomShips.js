@@ -244,7 +244,7 @@ function getLeftShips(shipsTypeClass) {
     return leftShips
 }
 
-function showShips(board, td, i, j) {
+function showShips(board, td, i, j, player) {
     j++;
     switch (board[i][j]) {
 
@@ -260,16 +260,13 @@ function showShips(board, td, i, j) {
         case 4: td.className = "near";
             break;
 
-        case 5: td.className = "ship";
+        case 5: 
+        player==="player"?td.className = "ship":td.className = "shipO"
             break;
 
         default: td.className = "default";
             break;
     }
-}
-
-function dontShowShips(td) {
-    td.className = "default";
 }
 
 function drawTable(board, player) {
@@ -319,8 +316,7 @@ function drawTable(board, player) {
                     td.id = "id" + (i - 1).toString() + j.toString();
                 }
                 //td.appendChild(document.createTextNode("i"+(i-1)+" j"+j)); 
-                showShips(board, td, i, j);
-                //dontShowShips(td);
+                showShips(board, td, i, j, player);
 
                 td.setAttribute("onmouseover", "hoverSquareColor(this)");
                 td.setAttribute("onmouseout", "defaultSquareColor(this)");
@@ -468,7 +464,7 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 }
 
 function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
-    if (squares[I][J].className === "ship") {
+    if (squares[I][J].className === "ship"||squares[I][J].className === "shipO") {
         if (turn === "player") {
             hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)
             turn = "oponent";
@@ -612,7 +608,7 @@ function shootOnClick() {
             document.querySelector("#shoot-btn").className = "disappeared";
         }
         turn = "player";
-        printBoard(board);
+        //printBoard(board);
     }, 000);//wait 1 sec    
 }
 
