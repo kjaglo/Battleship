@@ -650,7 +650,7 @@ function resetShipsToDrag() {
 
         for (index in chosenSquares) {
             if (index % 2 === 1) {
-                chosenSquares[index].style.background = "cadetblue";
+                chosenSquares[index].style.background = "red";
 
             }
         }
@@ -747,7 +747,7 @@ function chooseShip(id) {
 
         for (index in chosenSquares) {
             if (index % 2 === 1) {
-                chosenSquares[index].style.background = "cadetblue";
+                chosenSquares[index].style.background = "rgb(35, 170, 163)";
             }
         }
     }
