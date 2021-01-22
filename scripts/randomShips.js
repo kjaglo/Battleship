@@ -260,8 +260,8 @@ function showShips(board, td, i, j, player) {
         case 4: td.className = "near";
             break;
 
-        case 5: 
-        player==="player"?td.className = "ship":td.className = "shipO"
+        case 5:
+            player === "player" ? td.className = "ship" : td.className = "shipO"
             break;
 
         default: td.className = "default";
@@ -464,7 +464,7 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 }
 
 function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
-    if (squares[I][J].className === "ship"||squares[I][J].className === "shipO") {
+    if (squares[I][J].className === "ship" || squares[I][J].className === "shipO") {
         if (turn === "player") {
             hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)
             turn = "oponent";
@@ -840,16 +840,21 @@ function playOnClick() {
 
 function hoverSquareColor(square) {
     if (chosenShip !== "none") {
+
         for (let i = 0; i < chosenShipId; i++) {
             if (setDirection === "horizontal") {
-                const squareID = "#id" + (parseInt(square.id[2])).toString() + (parseInt(square.id[3]) + i).toString();
-                if (document.querySelector(squareID).className === "default") {
-                    document.querySelector(squareID).className = "hoverSquare";
+                if (11 - chosenShipId > (parseInt(square.id[3]))) {
+                    const squareID = "#id" + (parseInt(square.id[2])).toString() + (parseInt(square.id[3]) + i).toString();
+                    if (document.querySelector(squareID).className === "default") {
+                        document.querySelector(squareID).className = "hoverSquare";
+                    }
                 }
             } else {
-                const squareID = "#id" + (parseInt(square.id[2]) + i).toString() + (parseInt(square.id[3])).toString();
-                if (document.querySelector(squareID).className === "default") {
-                    document.querySelector(squareID).className = "hoverSquare";
+                if (11 - chosenShipId > (parseInt(square.id[2]))) {
+                    const squareID = "#id" + (parseInt(square.id[2]) + i).toString() + (parseInt(square.id[3])).toString();
+                    if (document.querySelector(squareID).className === "default") {
+                        document.querySelector(squareID).className = "hoverSquare";
+                    }
                 }
             }
         }
@@ -861,18 +866,20 @@ function defaultSquareColor(square) {
         for (let i = 0; i < chosenShipId; i++) {
             if (setDirection === "horizontal") {
                 const squareID = "#id" + (parseInt(square.id[2])).toString() + (parseInt(square.id[3]) + i).toString();
-
-                if (document.querySelector(squareID).className === "hoverSquare") {
-                    {
-                        document.querySelector(squareID).className = "default";
+                if (11 - chosenShipId > (parseInt(square.id[3]))) {
+                    if (document.querySelector(squareID).className === "hoverSquare") {
+                        {
+                            document.querySelector(squareID).className = "default";
+                        }
                     }
                 }
             } else {
                 const squareID = "#id" + (parseInt(square.id[2]) + i).toString() + (parseInt(square.id[3])).toString();
-
-                if (document.querySelector(squareID).className === "hoverSquare") {
-                    {
-                        document.querySelector(squareID).className = "default";
+                if (11 - chosenShipId > (parseInt(square.id[2]))) {
+                    if (document.querySelector(squareID).className === "hoverSquare") {
+                        {
+                            document.querySelector(squareID).className = "default";
+                        }
                     }
                 }
             }
