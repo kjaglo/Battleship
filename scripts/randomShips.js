@@ -650,7 +650,7 @@ function resetShipsToDrag() {
 
         for (index in chosenSquares) {
             if (index % 2 === 1) {
-                chosenSquares[index].style.background = "red";
+                chosenSquares[index].style.background =  "rgb(35, 170, 163)";
 
             }
         }
