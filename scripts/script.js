@@ -23,8 +23,6 @@ let shipsToFindO;
 let squaresO;
 let leftShipsOponent;
 
-let boardComputerShoot = createEmptyBoardAndBorders();
-
 let randomOrPlaceYourShips = 0;
 let shoot = 0;
 let squaresAround = [];
@@ -346,7 +344,7 @@ function currentHitSumShip(shipsToFind, i) {
     return sum;
 }
 
-function disableAround(i, row, col) {
+function disableAround(i, row, col, board) {
     let dxdy;
     if (i > 5) { // 1 square ships
         dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
@@ -392,7 +390,7 @@ function disableAround(i, row, col) {
     }
 }
 
-function sunkShip(player, shipsToFind, squares, i, r, c) {
+function sunkShip(board, player, shipsToFind, squares, i, r, c) {
     for (let k = 0; k < shipsToFind[i][0].length; k++) {
 
         const row = shipsToFind[i][0][k][0];
@@ -401,7 +399,11 @@ function sunkShip(player, shipsToFind, squares, i, r, c) {
         squares[row][col].className = "hit-and-sunk"
 
     } if (player === "oponent") {
-        disableAround(i, r, c);
+        disableAround(i, r, c, board);
+    } else {
+        
+        disableAround(i, r, c, board);
+
     }
 }
 
@@ -448,7 +450,7 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
                     currentSumShip[i] = currentSumShip[i] + 1; //add hit square
 
                     if (currentHitSumShip(shipsToFind, i) === shipsToFind[i][j].length) {
-                        sunkShip(player, shipsToFind, squares, i, row + 1, col + 1);
+                        sunkShip(board, player, shipsToFind, squares, i, row + 1, col + 1);
                         leftShips[i].className += " ship-left-sunked";
                         if (player === "oponent") {
                             squaresAround = [];
@@ -464,15 +466,19 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 }
 
 function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
+    
     if (squares[I][J].className === "ship" || squares[I][J].className === "shipO") {
         if (turn === "player") {
             hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)
+            disableCorners(board,I+1, J+1)
             turn = "oponent";
             shootOnClick();
         } else {
             alert("its not your turn");
         }
     }
+    colorNearSquares(squares, board);
+    //printBoard(board);
 }
 
 const missShip = function (board, squares, i, j) {
@@ -506,6 +512,24 @@ function playGuess(player, board, shipsToFind, squares, leftShips) {
                 squares[i][j].addEventListener("click", function () { miss(board, squares, i, j); });
             }
         }
+    }
+}
+
+function disableCorners(board,row, col) {
+
+    let corners = [{ x: -1, y: -1 }, { x: 1, y: 1 }, { x: 1, y: -1 }, { x: -1, y: 1 }];
+
+    for (i in corners) {
+
+        const cornerX = corners[i].x + row;
+        const cornerY = corners[i].y + col;
+        
+            
+            if (cornerX != 0 && cornerX != 11 && cornerY != 0 && cornerY != 11) {
+                board[cornerX][cornerY] = missedSquare;
+
+            }
+        
     }
 }
 
@@ -593,6 +617,7 @@ function randomSquareShoot(player, board, shoot) {
     }
     board[0][0] = shoot;
     //printBoard(board);
+    colorNearSquares(squares, board);
     return randomSquare;
 }
 
@@ -651,7 +676,16 @@ function resetShipsToDrag() {
         for (index in chosenSquares) {
             if (index % 2 === 1) {
                 chosenSquares[index].style.background =  "rgb(35, 170, 163)";
+            }
+        }
+    }
+}
 
+function colorNearSquares(squares, board) {
+    for (let row = 0; row < boardSize; row++) {
+        for (let col = 0; col < boardSize; col++) {
+            if(board[row][col]===1){
+                squares[row-1][col-1].className="miss";
             }
         }
     }
@@ -706,7 +740,7 @@ function resetLeftShips(leftShips) {
 }
 
 function quitOnClick() {
-
+    
     const answer = confirm("Are you sure you want to end game?");
     if (answer) {
         shoot = 0;
