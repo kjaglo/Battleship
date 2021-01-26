@@ -397,25 +397,13 @@ function sunkShip(board, player, shipsToFind, squares, i, r, c) {
         const col = shipsToFind[i][0][k][1];
 
         squares[row][col].className = "hit-and-sunk"
-
-    } if (player === "oponent") {
         disableAround(i, r, c, board);
-    } else {
-        
-        disableAround(i, r, c, board);
-
     }
 }
 
 function winMessage(player) {
     setTimeout(function () {
-        if (player === "player") {
-            alert("You won! Play again?");
-
-        } else {
-            alert("You lost. Play again?");
-        }
-
+        player === "player" ? alert("You won! Play again?") : alert("You lost. Play again?");
         shoot = 0;
         randomOrPlaceYourShips = 0;
         squaresAround = [];
@@ -466,11 +454,11 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
 }
 
 function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
-    
+
     if (squares[I][J].className === "ship" || squares[I][J].className === "shipO") {
         if (turn === "player") {
             hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)
-            disableCorners(board,I+1, J+1)
+            disableCorners(board, I + 1, J + 1)
             turn = "oponent";
             shootOnClick();
         } else {
@@ -515,7 +503,7 @@ function playGuess(player, board, shipsToFind, squares, leftShips) {
     }
 }
 
-function disableCorners(board,row, col) {
+function disableCorners(board, row, col) {
 
     let corners = [{ x: -1, y: -1 }, { x: 1, y: 1 }, { x: 1, y: -1 }, { x: -1, y: 1 }];
 
@@ -523,13 +511,12 @@ function disableCorners(board,row, col) {
 
         const cornerX = corners[i].x + row;
         const cornerY = corners[i].y + col;
-        
-            
-            if (cornerX != 0 && cornerX != 11 && cornerY != 0 && cornerY != 11) {
-                board[cornerX][cornerY] = missedSquare;
 
-            }
-        
+        if (cornerX != 0 && cornerX != 11 && cornerY != 0 && cornerY != 11) {
+            board[cornerX][cornerY] = missedSquare;
+
+        }
+
     }
 }
 
@@ -634,7 +621,7 @@ function shootOnClick() {
         }
         turn = "player";
         //printBoard(board);
-    }, 000);//wait 1 sec    
+    }, 1000);//wait 1 sec    
 }
 
 function clearShips() {
@@ -675,7 +662,7 @@ function resetShipsToDrag() {
 
         for (index in chosenSquares) {
             if (index % 2 === 1) {
-                chosenSquares[index].style.background =  "rgb(35, 170, 163)";
+                chosenSquares[index].style.background = "rgb(35, 170, 163)";
             }
         }
     }
@@ -684,8 +671,8 @@ function resetShipsToDrag() {
 function colorNearSquares(squares, board) {
     for (let row = 0; row < boardSize; row++) {
         for (let col = 0; col < boardSize; col++) {
-            if(board[row][col]===1){
-                squares[row-1][col-1].className="miss";
+            if (board[row][col] === 1) {
+                squares[row - 1][col - 1].className = "miss";
             }
         }
     }
@@ -740,7 +727,7 @@ function resetLeftShips(leftShips) {
 }
 
 function quitOnClick() {
-    
+
     const answer = confirm("Are you sure you want to end game?");
     if (answer) {
         shoot = 0;
