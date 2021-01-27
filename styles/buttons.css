@@ -1,5 +1,6 @@
 button {
-    background-color:  rgb(119, 118, 116);
+    /* background-color:  rgb(119, 118, 116); */
+    background-color:  rgb(182, 13, 55);
     border-radius: 5%;
     padding: 10px;
     margin: 5px;
@@ -16,14 +17,14 @@ button {
 }
 
 button:hover {
-    background-color: rgb(85, 84, 83);
+    background-color: rgb(151, 12, 47);
     color:white;
     border: none;
     outline:none;
 }
 
 button:active {
-    background-color: rgb(73, 73, 73);
+    background-color:  rgb(94, 3, 26);
     color:white;
     border: none;
     outline:none;  
