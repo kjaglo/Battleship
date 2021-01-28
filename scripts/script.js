@@ -11,10 +11,8 @@ const border = 9;
 let setDirection = "vertical";//vertical horizontal
 let turn = "player";
 
-let board = createEmptyBoardAndBorders();
 let shipsToFind = [];
 let squares;
-drawTable(board, "player");
 let leftShips;
 let squaresD;
 
@@ -35,7 +33,7 @@ let chosenShip = "none";
 let chosenShipId = 0;
 let placedShipsCount = 0;
 
-function createEmptyBoardAndBorders() {
+createEmptyBoardAndBorders = () => {
     let board = []
     // board:
 
@@ -59,14 +57,15 @@ function createEmptyBoardAndBorders() {
     }
     return board;
 }
+let board = createEmptyBoardAndBorders();
 
-function clearPrintBoard() {
+clearPrintBoard = () => {
     if (document.getElementById("printingArea")) {
         document.getElementById("printingArea").remove();
     }
 }
 
-function printBoard(board) {
+printBoard = (board) => {
     clearPrintBoard();
 
     const body = document.getElementsByTagName('body')[0];
@@ -85,7 +84,7 @@ function printBoard(board) {
     document.getElementById("printingArea").innerHTML += "<br>";
 }
 
-function randomParameters() {
+randomParameters = () => {
 
     const randomRow = Math.round(Math.random() * 100) % 10 + 1;
     const randomCol = Math.round(Math.random() * 100) % 10 + 1;
@@ -94,7 +93,7 @@ function randomParameters() {
     return { x: randomRow, y: randomCol, dir: randomDirection };
 }
 
-function getNearCount(board, params, dxdyShip) {
+getNearCount = (board, params, dxdyShip) => {
 
     let around = 0;
     const dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
@@ -111,7 +110,7 @@ function getNearCount(board, params, dxdyShip) {
     return around;
 }
 
-function placeShip(shipsToFind, board, params, dxdy) {
+placeShip = (shipsToFind, board, params, dxdy) =>{
 
     const squares = [];
 
@@ -123,7 +122,7 @@ function placeShip(shipsToFind, board, params, dxdy) {
     return shipsToFind;
 }
 
-function sizeThatCanBePlaced(board, params, dxdy) {
+ sizeThatCanBePlaced=(board, params, dxdy)=> {
     let size = 0;
     for (item of dxdy) {
         if (board[params.x + item.x][params.y + item.y] === border) {
@@ -135,7 +134,7 @@ function sizeThatCanBePlaced(board, params, dxdy) {
     return size;
 }
 
-function createShip(params, shipLength) {
+ createShip = (params, shipLength)=>{
 
     const dxdy1 = [{ x: 0, y: 0 }]
 
@@ -180,7 +179,7 @@ function createShip(params, shipLength) {
     return dxdy;
 }
 
-function createRandomShips(board) {
+ createRandomShips = (board) =>{
     let shipsToFind = [];
     shipsPlaced = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     shipsLengths = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
@@ -204,7 +203,7 @@ function createRandomShips(board) {
     return shipsToFind;
 }
 
-function getSquares(tableId) {
+ getSquares=(tableId) =>{
 
     const table = document.getElementById(tableId);
     const squares = [];
@@ -221,7 +220,7 @@ function getSquares(tableId) {
     return squares;
 }
 
-function resetTexts(texts) {
+ resetTexts=(texts)=> {
 
     for (let m = 0; m < 10; m++) {
         texts[m].className = "default-text";
@@ -229,7 +228,7 @@ function resetTexts(texts) {
     return texts;
 }
 
-function getLeftShips(shipsTypeClass) {
+ getLeftShips=(shipsTypeClass)=> {
 
     const shipsType = document.querySelector(shipsTypeClass);
     const leftShips = [];
@@ -242,7 +241,7 @@ function getLeftShips(shipsTypeClass) {
     return leftShips
 }
 
-function showShips(board, td, i, j, player) {
+ showShips=(board, td, i, j, player) =>{
     j++;
     switch (board[i][j]) {
 
@@ -267,7 +266,7 @@ function showShips(board, td, i, j, player) {
     }
 }
 
-function drawTable(board, player) {
+ drawTable=(board, player) =>{
 
     const container = document.getElementById('container');
     let table;
@@ -326,8 +325,10 @@ function drawTable(board, player) {
     table.appendChild(tbdy);
     container.appendChild(table)
 }
+drawTable(board, "player");
 
-function currentHitSumAll(shipsToFind, currentSumShip, winningSumShip) {
+
+ currentHitSumAll=(shipsToFind, currentSumShip, winningSumShip) =>{
     for (let i = 0; i < shipsToFind.length; i++) {
         if (winningSumShip[i] != currentSumShip[i]) {
             return false;
@@ -336,7 +337,7 @@ function currentHitSumAll(shipsToFind, currentSumShip, winningSumShip) {
     return true;
 }
 
-function currentHitSumShip(shipsToFind, i) {
+ currentHitSumShip=(shipsToFind, i)=> {
     let sum = 0;
     for (let k = 0; k < shipsToFind[i][0].length; k++) {
         sum = sum + shipsToFind[i][1][k];
@@ -344,7 +345,7 @@ function currentHitSumShip(shipsToFind, i) {
     return sum;
 }
 
-function disableAround(i, row, col, board) {
+ disableAround=(i, row, col, board) =>{
     let dxdy;
     if (i > 5) { // 1 square ships
         dxdy = [{ x: -1, y: 0 }, { x: -1, y: 1 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }, { x: -1, y: -1 }];
@@ -390,7 +391,7 @@ function disableAround(i, row, col, board) {
     }
 }
 
-function sunkShip(board, player, shipsToFind, squares, i, r, c) {
+ sunkShip=(board, player, shipsToFind, squares, i, r, c) =>{
     for (let k = 0; k < shipsToFind[i][0].length; k++) {
 
         const row = shipsToFind[i][0][k][0];
@@ -401,7 +402,7 @@ function sunkShip(board, player, shipsToFind, squares, i, r, c) {
     }
 }
 
-function winMessage(player) {
+ winMessage=(player)=> {
     setTimeout(function () {
         player === "player" ? alert("You won! Play again?") : alert("You lost. Play again?");
         shoot = 0;
@@ -423,7 +424,7 @@ function winMessage(player) {
     }, 1000);//wait 1 sec    
 }
 
-function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
+ hitShip=(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)=> {
 
     const row = I;
     const col = J;
@@ -453,7 +454,7 @@ function hitShip(player, board, shipsToFind, leftShips, squares, I, J, currentSu
     }
 }
 
-function hit(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) {
+ hit=(player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip)=> {
 
     if (squares[I][J].className === "ship" || squares[I][J].className === "shipO") {
         if (turn === "player") {
@@ -474,7 +475,7 @@ const missShip = function (board, squares, i, j) {
     board[i + 1][j + 1] = missedSquare;
 }
 
-function miss(board, squares, i, j) {
+miss=(board, squares, i, j) => {
     if (squares[i][j].className === "default") {
         if (turn === "player") {
             missShip(board, squares, i, j);
@@ -486,7 +487,7 @@ function miss(board, squares, i, j) {
     }
 }
 
-function playGuess(player, board, shipsToFind, squares, leftShips) {
+ playGuess=(player, board, shipsToFind, squares, leftShips)=>  {
 
     let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
@@ -503,7 +504,7 @@ function playGuess(player, board, shipsToFind, squares, leftShips) {
     }
 }
 
-function disableCorners(board, row, col) {
+ disableCorners=(board, row, col)=>  {
 
     let corners = [{ x: -1, y: -1 }, { x: 1, y: 1 }, { x: 1, y: -1 }, { x: -1, y: 1 }];
 
@@ -520,7 +521,7 @@ function disableCorners(board, row, col) {
     }
 }
 
-function aroundShoot(row, col) {
+ aroundShoot=(row, col)=>  {
 
     let around = [{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: 0, y: -1 }];
     let corners = [{ x: -1, y: -1 }, { x: 1, y: 1 }, { x: 1, y: -1 }, { x: -1, y: 1 }];
@@ -549,7 +550,7 @@ function aroundShoot(row, col) {
     }
 }
 
-function randomSquareShoot(player, board, shoot) {
+ randomSquareShoot=(player, board, shoot) => {
     let randomSquare;
     let squareShooted = 0;
 
@@ -608,7 +609,7 @@ function randomSquareShoot(player, board, shoot) {
     return randomSquare;
 }
 
-function shootOnClick() {
+ shootOnClick=()=>  {
     setTimeout(function () {
         shoot++;
         const randomSquare = randomSquareShoot("oponent", board, shoot);
@@ -624,7 +625,7 @@ function shootOnClick() {
     }, 1000);//wait 1 sec    
 }
 
-function clearShips() {
+ clearShips=() =>{
 
     const shipsToDrag = document.querySelector(".ships-to-drag").childNodes;
 
@@ -636,7 +637,7 @@ function clearShips() {
     }
 }
 
-function randomShipsOnClick() {
+ randomShipsOnClick=() =>{
     resetShipsOnClick()
     clearShips()
     board = createEmptyBoardAndBorders();
@@ -647,7 +648,7 @@ function randomShipsOnClick() {
     squares = getSquares("table-player");
 }
 
-function resetShipsToDrag() {
+ resetShipsToDrag=()=> {
     const shipsToDrag = document.querySelector(".ships-to-drag").childNodes;
 
     for (index in shipsToDrag) {
@@ -668,7 +669,7 @@ function resetShipsToDrag() {
     }
 }
 
-function colorNearSquares(squares, board) {
+ colorNearSquares=(squares, board) =>{
     for (let row = 0; row < boardSize; row++) {
         for (let col = 0; col < boardSize; col++) {
             if (board[row][col] === 1) {
@@ -678,7 +679,7 @@ function colorNearSquares(squares, board) {
     }
 }
 
-function resetShipsOnClick() {
+ resetShipsOnClick=() =>{
     chosenShip = "none";
     board = createEmptyBoardAndBorders();
     randomOrPlaceYourShips = 0;
@@ -688,7 +689,7 @@ function resetShipsOnClick() {
     hoverS(squaresD);
 }
 
-function changeButtons(play) {
+ changeButtons=(play)=> {
     if (play) {
         document.querySelector("#random-btn").className = "";
         document.querySelector("#rotate-btn").className = "";
@@ -712,21 +713,21 @@ function changeButtons(play) {
     }
 }
 
-function randomOponentShips() {
+ randomOponentShips=()=> {
     boardOponent = createEmptyBoardAndBorders();
     shipsToFindO = createRandomShips(boardOponent);
     drawTable(boardOponent, "oponent");
     squaresO = getSquares("table-oponent");
 }
 
-function resetLeftShips(leftShips) {
+ resetLeftShips=(leftShips) =>{
 
     for (ship of leftShips) {
         ship.classList.remove('ship-left-sunked');
     }
 }
 
-function quitOnClick() {
+ quitOnClick=() =>{
 
     const answer = confirm("Are you sure you want to end game?");
     if (answer) {
@@ -752,13 +753,13 @@ function quitOnClick() {
     }
 }
 
-function rotateShipOnClick() {
+ rotateShipOnClick=() =>{
     if (setDirection === "horizontal") { setDirection = "vertical" } else {
         setDirection = "horizontal"
     }
 }
 
-function chooseShip(id) {
+ chooseShip=(id)=> {
 
     chosenShipId = parseInt(id[2]);
 
@@ -782,7 +783,7 @@ function chooseShip(id) {
     }
 }
 
-function hover(squares, I, J) {
+ hover=(squares, I, J)=> {
     let ok = false;
     if (chosenShip !== "none") {
 
@@ -831,7 +832,7 @@ function hover(squares, I, J) {
     }
 }
 
-function hoverS(squares) {
+ hoverS=(squares) =>{
 
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
@@ -840,7 +841,7 @@ function hoverS(squares) {
     }
 }
 
-function playOnClick() {
+ playOnClick=() =>{
     if (placeYourShips === 1) {
         turn = "player"
         drawTable(board, "player");
@@ -859,7 +860,7 @@ function playOnClick() {
     }
 }
 
-function hoverSquareColor(square) {
+ hoverSquareColor=(square)=> {
     if (chosenShip !== "none") {
 
         for (let i = 0; i < chosenShipId; i++) {
@@ -882,7 +883,7 @@ function hoverSquareColor(square) {
     }
 }
 
-function defaultSquareColor(square) {
+ defaultSquareColor=(square) =>{
     if (chosenShip !== "none") {
         for (let i = 0; i < chosenShipId; i++) {
             if (setDirection === "horizontal") {
