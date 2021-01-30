@@ -391,12 +391,11 @@ drawTable(board, "player");
     }
 }
 
- sunkShip=(board, player, shipsToFind, squares, i, r, c) =>{
+ sunkShip=(board, shipsToFind, squares, i, r, c) =>{
     for (let k = 0; k < shipsToFind[i][0].length; k++) {
 
         const row = shipsToFind[i][0][k][0];
         const col = shipsToFind[i][0][k][1];
-
         squares[row][col].className = "hit-and-sunk"
         disableAround(i, r, c, board);
     }
@@ -439,7 +438,7 @@ drawTable(board, "player");
                     currentSumShip[i] = currentSumShip[i] + 1; //add hit square
 
                     if (currentHitSumShip(shipsToFind, i) === shipsToFind[i][j].length) {
-                        sunkShip(board, player, shipsToFind, squares, i, row + 1, col + 1);
+                        sunkShip(board, shipsToFind, squares, i, row + 1, col + 1);
                         leftShips[i].className += " ship-left-sunked";
                         if (player === "oponent") {
                             squaresAround = [];
@@ -550,6 +549,17 @@ miss=(board, squares, i, j) => {
     }
 }
 
+
+colorNearSquares=(squares, board) =>{
+    for (let row = 0; row < boardSize; row++) {
+        for (let col = 0; col < boardSize; col++) {
+            if (board[row][col] === 1) {
+                squares[row - 1][col - 1].className = "miss";
+            }
+        }
+    }
+}
+
  randomSquareShoot=(player, board, shoot) => {
     let randomSquare;
     let squareShooted = 0;
@@ -605,7 +615,7 @@ miss=(board, squares, i, j) => {
     }
     board[0][0] = shoot;
     //printBoard(board);
-    colorNearSquares(squares, board);
+    //colorNearSquares(squares, board);
     return randomSquare;
 }
 
@@ -669,15 +679,7 @@ miss=(board, squares, i, j) => {
     }
 }
 
- colorNearSquares=(squares, board) =>{
-    for (let row = 0; row < boardSize; row++) {
-        for (let col = 0; col < boardSize; col++) {
-            if (board[row][col] === 1) {
-                squares[row - 1][col - 1].className = "miss";
-            }
-        }
-    }
-}
+
 
  resetShipsOnClick=() =>{
     chosenShip = "none";
@@ -732,6 +734,10 @@ const elementPlayIdClass=[".ships-left", ".ships-left-oponent","#quit-btn"];
         randomOrPlaceYourShips = 0;
         squaresAround = [];
         currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        console.log(currentSumShip)
+        let ar=[]
+        ar.fill(0,0,9);
+        console.log("ar",ar)
         winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
         placeYourShips = 0;
         chosenShip = "none";
