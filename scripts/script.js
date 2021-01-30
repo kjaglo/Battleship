@@ -688,28 +688,25 @@ miss=(board, squares, i, j) => {
     squaresD = getSquares("table-player");
     hoverS(squaresD);
 }
-
+const buttonDefaultId=["#random-btn","#rotate-btn", "#reset-btn", "#play-btn"];
+const elementPlayIdClass=[".ships-left", ".ships-left-oponent","#quit-btn"];
  changeButtons=(play)=> {
     if (play) {
-        document.querySelector("#random-btn").className = "";
-        document.querySelector("#rotate-btn").className = "";
-        document.querySelector("#reset-btn").className = "";
-        document.querySelector("#play-btn").className = "";
-
-        document.querySelector(".ships-left").classList.add("disappeared");
-        document.querySelector(".ships-left-oponent").classList.add("disappeared");
+        for(let i of buttonDefaultId){
+            document.querySelector(i).className = "";
+        }
+        for(let i of elementPlayIdClass){
+            document.querySelector(i).classList.add("disappeared");
+        }
         document.querySelector(".ships-to-drag").classList.remove("disappeared");
-        document.querySelector("#quit-btn").className = "disappeared";
     } else {
-        document.querySelector("#rotate-btn").className = "disappeared";
-        document.querySelector("#random-btn").className = "disappeared";
-        document.querySelector("#reset-btn").className = "disappeared";
-        document.querySelector("#play-btn").className = "disappeared";
-
+        for(let i of buttonDefaultId){
+            document.querySelector(i).className = "disappeared";
+        }
         document.querySelector(".ships-to-drag").classList.add("disappeared");
-        document.querySelector(".ships-left-oponent").classList.remove("disappeared");
-        document.querySelector(".ships-left").classList.remove("disappeared");
-        document.querySelector("#quit-btn").className = "";
+        for(let i of elementPlayIdClass){
+            document.querySelector(i).classList.remove("disappeared");
+        }
     }
 }
 
@@ -732,13 +729,10 @@ miss=(board, squares, i, j) => {
     const answer = confirm("Are you sure you want to end game?");
     if (answer) {
         shoot = 0;
-
         randomOrPlaceYourShips = 0;
         squaresAround = [];
-
         currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
-
         placeYourShips = 0;
         chosenShip = "none";
         chosenShipId = 0;
@@ -760,13 +754,10 @@ miss=(board, squares, i, j) => {
 }
 
  chooseShip=(id)=> {
-
     chosenShipId = parseInt(id[2]);
-
     const shipsToDrag = document.querySelector(".ships-to-drag");
     if (chosenShip !== "none") {
         const chosenSquares = chosenShip.childNodes;
-
         for (index in chosenSquares) {
             if (index % 2 === 1) {
                 chosenSquares[index].style.background = "rgb(35, 170, 163)";
@@ -786,7 +777,6 @@ miss=(board, squares, i, j) => {
  hover=(squares, I, J)=> {
     let ok = false;
     if (chosenShip !== "none") {
-
         if (setDirection === "horizontal") {
             params = { dir: "horizontal", x: ++I, y: ++J }
         }
@@ -795,7 +785,6 @@ miss=(board, squares, i, j) => {
         }
         const dxdy = createShip(params, chosenShipId);
         const sizeThatFits = sizeThatCanBePlaced(board, params, dxdy);
-
         if (sizeThatFits === chosenShipId) {
             const near = getNearCount(board, params, dxdy);
             if (8 * chosenShipId === near) {
@@ -803,8 +792,6 @@ miss=(board, squares, i, j) => {
                 ok = true;
             }
         }
-
-
         if (ok) {
             I--;
             J--;
@@ -824,7 +811,6 @@ miss=(board, squares, i, j) => {
                     squares[I + i][J].className = "ship";
                 }
             }
-
             chosenShip.classList.add("ship-left-disappeared");
             draggedShips.push(chosenShip);
             chosenShip = "none";
@@ -833,7 +819,6 @@ miss=(board, squares, i, j) => {
 }
 
  hoverS=(squares) =>{
-
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) {
             squares[i][j].addEventListener("click", function () { hover(squares, i, j); }, { once: true });
