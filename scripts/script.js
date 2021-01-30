@@ -733,11 +733,7 @@ const elementPlayIdClass=[".ships-left", ".ships-left-oponent","#quit-btn"];
         shoot = 0;
         randomOrPlaceYourShips = 0;
         squaresAround = [];
-        currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        console.log(currentSumShip)
-        let ar=[]
-        ar.fill(0,0,9);
-        console.log("ar",ar)
+        currentSumShip = new Array(10).fill(0);
         winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
         placeYourShips = 0;
         chosenShip = "none";
