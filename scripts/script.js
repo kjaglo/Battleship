@@ -25,7 +25,7 @@ let randomOrPlaceYourShips = 0;
 let shoot = 0;
 let squaresAround = [];
 
-let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let currentSumShip = new Array(10).fill(0);
 let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 
 let placeYourShips = 0;
@@ -129,31 +129,16 @@ createShip = (params, shipLength) => {
     const dxdy4h = [{ x: 0, y: 0 }, { x: 0, y: 1 }, { x: 0, y: 2 }, { x: 0, y: 3 }]
     const dxdy4v = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }]
 
+    let dxdy;
     switch (shipLength) {
         case 1:
-            return dxdy1;
-
+            dxdy = dxdy1; break;
         case 2:
-            switch (params.dir) {
-                case "horizontal":
-                    return dxdy2h;
-                case "vertical":
-                    return dxdy2v;
-            }
+            params.dir === "horizontal" ? dxdy = dxdy2h : dxdy = dxdy2v; break;
         case 3:
-            switch (params.dir) {
-                case "horizontal":
-                    return dxdy3h;
-                case "vertical":
-                    return dxdy3v;
-            }
+            params.dir === "horizontal" ? dxdy = dxdy3h : dxdy = dxdy3v; break;
         case 4:
-            switch (params.dir) {
-                case "horizontal":
-                    return dxdy4h;
-                case "vertical":
-                    return dxdy4v;
-            }
+            params.dir === "horizontal" ? dxdy = dxdy4h : dxdy = dxdy4v; break;
     }
     return dxdy;
 }
@@ -180,7 +165,6 @@ createRandomShips = (board) => {
 }
 
 getSquares = (tableId) => {
-
     const table = document.getElementById(tableId);
     const squares = [];
     let k = 0;
@@ -203,12 +187,10 @@ resetTexts = (texts) => {
 }
 
 getLeftShips = (shipsTypeClass) => {
-
     const shipsType = document.querySelector(shipsTypeClass);
     const leftShips = [];
     let ids;
     shipsTypeClass === ".ships-left" ? ids = ["#s4", "#s3a", "#s3b", "#s2a", "#s2b", "#s2c", "#s1a", "#s1b", "#s1c", "#s1d"] : ids = ["#so4", "#so3a", "#so3b", "#so2a", "#so2b", "#so2c", "#so1a", "#so1b", "#so1c", "#so1d"];
-
     for (i in ids) {
         leftShips.push(shipsType.querySelector(ids[i]))
     }
@@ -217,15 +199,14 @@ getLeftShips = (shipsTypeClass) => {
 
 showShips = (board, td, i, j, player) => {
     j++;
-    if (board[i][j]===5) {
-            player === "player" ? td.className = "ship" : td.className = "shipO"
-    } else{
+    if (board[i][j] === 5) {
+        player === "player" ? td.className = "ship" : td.className = "shipO"
+    } else {
         td.className = "default";
     }
 }
 
 drawTable = (board, player) => {
-
     const container = document.getElementById('container');
     let table;
     if (player === "oponent") {
@@ -243,7 +224,6 @@ drawTable = (board, player) => {
         table = document.createElement('table');
         table.id = "table-player";
     }
-
     let tbdy = document.createElement('tbody');
     for (let i = 0; i < 11; i++) {
         const tr = document.createElement('tr');
@@ -253,7 +233,6 @@ drawTable = (board, player) => {
         }
         tr.appendChild(th);
         for (let j = 0; j < 10; j++) {
-
             if (i === 0) {
                 const th = document.createElement('th');
                 th.appendChild(document.createTextNode(j + 1)); // Colnames: 1-10
@@ -277,7 +256,6 @@ drawTable = (board, player) => {
     container.appendChild(table)
 }
 drawTable(board, "player");
-
 
 currentHitSumAll = (shipsToFind, currentSumShip, winningSumShip) => {
     for (let i = 0; i < shipsToFind.length; i++) {
@@ -308,9 +286,7 @@ disableAround = (i, row, col, board) => {
     } else {
         let direction;
         let sizeOfShip;
-
         board[row][col + 1] === 2 || board[row][col - 1] === 2 ? direction = "horizontal" : direction = "vertical";
-
         if (i > 2) { // 2 square ships
             sizeOfShip = 2;
         } else if (i > 0) { // 3 square ships
@@ -319,7 +295,6 @@ disableAround = (i, row, col, board) => {
             sizeOfShip = 4;
         }
         if (direction === "vertical") {
-
             if (board[row - 1][col] === hitSquare) { // current is lower
                 if (board[row + 1][col] != border) { board[row + 1][col] = missedSquare; }
                 if (board[row - sizeOfShip][col] != border) { board[row - sizeOfShip][col] = missedSquare; }
@@ -329,7 +304,6 @@ disableAround = (i, row, col, board) => {
                 if (board[row - 1][col] != border) { board[row - 1][col] = missedSquare; }
             }
         } else { //dir = horizontal
-
             if (board[row][col - 1] === hitSquare) { // current is right
                 if (board[row][col - sizeOfShip] != border) { board[row][col - sizeOfShip] = missedSquare; }
                 if (board[row][col + 1] != border) { board[row][col + 1] = missedSquare; }
@@ -344,7 +318,6 @@ disableAround = (i, row, col, board) => {
 
 sunkShip = (board, shipsToFind, squares, i, r, c) => {
     for (let k = 0; k < shipsToFind[i][0].length; k++) {
-
         const row = shipsToFind[i][0][k][0];
         const col = shipsToFind[i][0][k][1];
         squares[row][col].className = "hit-and-sunk"
@@ -375,7 +348,6 @@ winMessage = (player) => {
 }
 
 hitShip = (player, board, shipsToFind, leftShips, squares, I, J, currentSumShip, winningSumShip) => {
-
     const row = I;
     const col = J;
     squares[row][col].className = "hit";
@@ -437,7 +409,6 @@ miss = (board, squares, i, j) => {
 }
 
 playGuess = (player, board, shipsToFind, squares, leftShips) => {
-
     let currentSumShip = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let winningSumShip = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
     for (let i = 0; i < 10; i++) {
@@ -465,10 +436,8 @@ disableCorners = (board, row, col) => {
 }
 
 aroundShoot = (row, col) => {
-
     let around = [{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: 0, y: -1 }];
     let corners = [{ x: -1, y: -1 }, { x: 1, y: 1 }, { x: 1, y: -1 }, { x: -1, y: 1 }];
-
     for (i in around) {
         const x = around[i].x + row;
         const y = around[i].y + col;
@@ -530,7 +499,6 @@ randomSquareShoot = (player, board, shoot) => {
             }
         }
     } else {
-
         while (squareShooted === 0 && shoot <= 100 && turn === "oponent") {
             const randomRow = Math.round(Math.random() * 100) % 10 + 1;
             const randomCol = Math.round(Math.random() * 100) % 10 + 1;
@@ -554,7 +522,6 @@ randomSquareShoot = (player, board, shoot) => {
         }
     }
     board[0][0] = shoot;
-    //printBoard(board);
     //colorNearSquares(squares, board);
     return randomSquare;
 }
@@ -571,7 +538,6 @@ shootOnClick = () => {
             document.querySelector("#shoot-btn").className = "disappeared";
         }
         turn = "player";
-        //printBoard(board);
     }, 000);//wait 1 sec    
 }
 
@@ -651,14 +617,12 @@ randomOponentShips = () => {
 }
 
 resetLeftShips = (leftShips) => {
-
     for (ship of leftShips) {
         ship.classList.remove('ship-left-sunked');
     }
 }
 
 quitOnClick = () => {
-
     const answer = confirm("Are you sure you want to end game?");
     if (answer) {
         shoot = 0;
@@ -728,7 +692,6 @@ hover = (squares, I, J) => {
         if (ok) {
             I--;
             J--;
-            //printBoard(board);
             placedShipsCount++;
             if (placedShipsCount === 10) {
                 placeYourShips = 1;
@@ -780,7 +743,6 @@ playOnClick = () => {
 
 hoverSquareColor = (square) => {
     if (chosenShip !== "none") {
-
         for (let i = 0; i < chosenShipId; i++) {
             if (setDirection === "horizontal") {
                 if (11 - chosenShipId > (parseInt(square.id[3]))) {
