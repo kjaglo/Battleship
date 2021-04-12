@@ -674,12 +674,7 @@ chooseShip = (id) => {
 hover = (squares, I, J) => {
     let ok = false;
     if (chosenShip !== "none") {
-        if (setDirection === "horizontal") {
-            params = { dir: "horizontal", x: ++I, y: ++J }
-        }
-        else {
-            params = { dir: "vertical", x: ++I, y: ++J }
-        }
+        setDirection === "horizontal" ? params = { dir: "horizontal", x: ++I, y: ++J }:  params = { dir: "vertical", x: ++I, y: ++J }
         const dxdy = createShip(params, chosenShipId);
         const sizeThatFits = sizeThatCanBePlaced(board, params, dxdy);
         if (sizeThatFits === chosenShipId) {
