@@ -42,5 +42,5 @@ The first player who sinks all the ships win.
 
 ### End game
 
-<img src="pictures/battleship6.PNG"
+<img src="pictures/lost.PNG"
      alt="Play mode"/>
