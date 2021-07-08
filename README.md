@@ -30,6 +30,7 @@ The first player who sinks all the ships win.
      alt="Ship placement"/>
 
 
+
 ### Play mode
 
 <img src="pictures/battleship2.PNG"
