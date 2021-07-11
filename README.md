@@ -28,6 +28,11 @@ The first player who sinks all the ships win.
 <img src="pictures/battleship3.PNG"
      alt="Ship placement"/>
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> fab173d02da14bcedf7e1c4a43e150d966780de3
 ### Play mode
 
 <img src="pictures/battleship2.PNG"
@@ -43,3 +48,5 @@ The first player who sinks all the ships win.
 <img src="pictures/lost.PNG"
      alt="End game"/>
 
+ 
+ 
