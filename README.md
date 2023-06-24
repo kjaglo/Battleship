@@ -7,14 +7,41 @@ Game implemented from scratch in plain JavaScript, CSS, HTML.
 Battleship is a strategy-type guessing game. 
 
 After placing your ships, you can start guessing where the opposing player's ships are.
-The objective of the game is to destroy the opponent's fleet
-The first player who sinks all the ships win.
+Destroy all of the opponent's ships before they destroy yours.
+The first player to sink all the opponent's ships wins the game.
 
 ## Features
 
-- random or custom ship placement selection
+- Choose between random ship placement or manually select and place your ships
+- Interact with the opponent's grid to destroy their fleet
 
-- matches against AI
+## How to Play
+
+1. Ship Placement
+
+- Click on the "Random" button to automatically place your ships on the grid
+- Alternatively, manually select and place your ships by clicking on the ships and placing them on the grid
+- Use the "Rotate" button to rotate the ship's orientation (horizontal or vertical)
+- If needed, click the "Reset" button to clear and restart the ship placement process
+
+2. Start the Game
+
+- Click the "Play" button to start the game
+- The AI opponent will also place their ships on their grid
+
+3. Guessing and Attacking
+
+- Click on the opponent's grid on the right side of the screen to guess and attack a specific cell
+- Watch as the AI opponent strategically attacks your fleet on the left side of the screen
+
+4. End the Game
+
+- At any time, click the "Quit" button to end the game.
+
+## Technologies Used
+- HTML
+- CSS
+- JavaScript
 
 ## Presentation​
 
@@ -28,11 +55,6 @@ The first player who sinks all the ships win.
 <img src="pictures/battleship3.PNG"
      alt="Ship placement"/>
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> fab173d02da14bcedf7e1c4a43e150d966780de3
 ### Play mode
 
 <img src="pictures/battleship2.PNG"
@@ -48,5 +70,5 @@ The first player who sinks all the ships win.
 <img src="pictures/lost.PNG"
      alt="End game"/>
 
- 
+Enjoy the game and may you achieve victory against the AI opponent!
  
