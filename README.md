@@ -1,4 +1,4 @@
-# Battleship
+# Battleship Game 
 
 This Battleship game is implemented from scratch using plain JavaScript and follows object-oriented programming (OOP) patterns.
 
