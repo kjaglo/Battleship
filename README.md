@@ -1,6 +1,6 @@
 # Battleship
 
-Game implemented from scratch in plain JavaScript, CSS, HTML.
+This Battleship game is implemented from scratch using plain JavaScript and follows object-oriented programming (OOP) patterns.
 
 ## Description
 
